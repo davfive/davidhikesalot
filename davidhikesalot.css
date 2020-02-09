@@ -1,0 +1,34 @@
+/** Global overrides */
+h3, h4 { margin-bottom: 5px; }
+ul { margin-bottom: 10px; }
+.content-areanbt { padding-top: 0px; }
+.site-contentnbt-hide {
+  background-image: url("https://drive.google.com/uc?id=132UIE8S_Yc0H0jaBhs1XyKV-B4REeXwL");
+  background-repeat: repeat-x;
+}
+.capitalize { text-transform: capitalize; }
+.small-text {font-size: small !important;}
+
+#sectionParkDetails .card-header { padding: .75rem; }
+.page-section    h6:first-of-type { margin-top: 0; }
+.page-subsection h6 { margin-bottom: 0px; font-weight: bold; }
+
+ul.status-list { margin-left: 0px; list-style: none; display: inline-block; font-size: small !important; }
+ul.status-list li { float: left; }
+ul.parks-list  { column-count: 4; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
+ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
+
+/** Bullet Icons */
+.bullet-icon:before { font-family: "Font Awesome 5 Free"; margin: 0 5px 0 -20px; display: inline-block; vertical-align: middle; }
+.status-icon:before { font-family: "Font Awesome 5 Free"; margin: 0 5px; }
+
+/* FontAwesome has a bug where 700 is solid and 900 is regular. Remove this when they fix it */
+.normal:before      { content: '\f111'; font-weight: 700; color: black; font-size: 2px; padding: 0 3px 2px 3px; }
+.no-hikes:before    { content: '\f057'; font-weight: 700; color: #c0c0c0; }
+.not-started:before { content: '\f056'; font-weight: 700; color: #ee7600; }
+.started:before     { content: '\f111'; color: blue; }
+.halfway:before     { content: '\f111'; font-weight: 700; color: blue; clip-path: polygon(50% 0%, 50% 100%, 0% 100%, 0% 0%); }
+.almost-done:before { content: '\f111'; font-weight: 700; color: blue; }
+.completed:before   { content: '\f058'; font-weight: 700; color: green; }
+.favorite:before    { content: '\f005'; }
+.writeup:before     { content: '\f302'; }
