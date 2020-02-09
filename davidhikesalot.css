@@ -1,3 +1,5 @@
+/* Expects font-awesome to be previously included */
+
 /** Global overrides */
 h3, h4 { margin-bottom: 5px; }
 ul { margin-bottom: 10px; }
@@ -32,3 +34,17 @@ ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; list-styl
 .completed:before   { content: '\f058'; font-weight: 700; color: green; }
 .favorite:before    { content: '\f005'; }
 .writeup:before     { content: '\f302'; }
+
+/* Park Details */
+#sectionParkDetails img { object-fit: contain; width: 20vw /* so the map always vertically fits on page */; }
+
+/* Mobile Overrides (single column, don't show big images) */
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .site-descriptionnbt { line-height: 1.75em; padding: 10px 20px; }
+  .site-brandingnbt { margin: 20px auto 0 auto; }
+  .post-title.entry-title { margin-top: 0; }
+  ul.status-list li { float: unset }
+  ul.parks-list { column-count: 1; }
+  ul.hikes-list { column-count: 1; }
+}
