@@ -65,7 +65,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   width: 20vw /* so the map always vertically fits on page */; 
 }
 
-#sectionParkDetails .park-card-details {
+#sectionParkDetails .park-card-content {
   padding: auto 10px;
 }
 

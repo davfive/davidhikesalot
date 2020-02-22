@@ -123,7 +123,7 @@ jQuery(document).ready(function($) {
       let parkDiv = `${parkAnchor}<div class="page-subsection park-card">
         <div class="park-card-image">${map}</div>
         <div class="park-card-content">
-          <h4>${parkHeader}</h4>
+          <h5>${parkHeader}</h5>
           <p>
       `
 
