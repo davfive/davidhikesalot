@@ -120,7 +120,7 @@ jQuery(document).ready(function($) {
           <img src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}"></a>
           `
       }
-      let parkDiv = `${parkAnchor}<div class="page-subsection park-card flex-row">
+      let parkDiv = `${parkAnchor}<div class="page-subsection park-card">
         <div class="park-card-image">${map}</div>
         <div class="park-card-content">
           <h4>${parkHeader}</h4>

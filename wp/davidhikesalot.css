@@ -60,7 +60,9 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   border-radius: 5px;
 }
 #sectionParkDetails .park-card-image img {
-  object-fit: contain; width: 20vw /* so the map always vertically fits on page */; 
+  border-radius: 5px;
+  object-fit: contain;
+  width: 20vw /* so the map always vertically fits on page */; 
 }
 
 #sectionParkDetails .park-card-details {
