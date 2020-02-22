@@ -50,11 +50,21 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 
 
 /* Park Details */
+#sectionParkDetails .park-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  display: flex;
+}
 #sectionParkDetails .park-card-image {
-  float: left;
+  border-radius: 5px;
 }
 #sectionParkDetails .park-card-image img {
   object-fit: contain; width: 20vw /* so the map always vertically fits on page */; 
+}
+
+#sectionParkDetails .park-card-details {
+  padding: auto 10px;
 }
 
 /* Mobile Overrides (single column, don't show big images) */
