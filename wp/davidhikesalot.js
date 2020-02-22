@@ -6,8 +6,8 @@ const cellIsEmpty = (row,id) => (["","--"].indexOf(cellText(row,id)) >= 0)
 const hikeStatuses = ["nexthike", "planned", "completed"]
 const parkAnchor = (name) => name.replace(/[^\w]/g,'-').toLowerCase()
 
-jQuery(document).ready(function() {
-  jQuery.when($.getJSON(parksSheetUrl), jQuery.getJSON(hikesSheetUrl)).done(function(parksSheet, hikesSheet) {
+jQuery(document).ready(function($) {
+  $.when($.getJSON(parksSheetUrl), $.getJSON(hikesSheetUrl)).done(function(parksSheet, hikesSheet) {
     const Hikes = {}
     const Stats = {
       completed: { parks: 0, hikes: 0, distance: 0.0, elevation: 0.0 },
@@ -98,7 +98,7 @@ jQuery(document).ready(function() {
             hikes[hikeType].push(`<li class="bullet-icon ${hikeIcon(hikeRow)}">${parkName} ${hikeLink(hikeRow)} ${hikeStats(hikeRow)} ${hikePost(hikeRow)}</li>`)
           })
           if (hikes[hikeType].length) {
-            jQuery(`#sectionHikes #${hikeType} ul.hikes-list`).append(hikes[hikeType].join(""))
+            $(`#sectionHikes #${hikeType} ul.hikes-list`).append(hikes[hikeType].join(""))
           }
         })
       }
@@ -149,10 +149,10 @@ jQuery(document).ready(function() {
         }
       })
       parkDiv += '</div></div><br>'
-      jQuery("#sectionParkDetailsCards").append(parkDiv)
+      $("#sectionParkDetailsCards").append(parkDiv)
     })
 
-    jQuery("#hikingStats").append(`
+    $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        | Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
     `)
