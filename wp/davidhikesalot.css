@@ -22,9 +22,9 @@ ul { margin-bottom: 10px; }
 ul.status-list { margin-left: 0px; list-style: none; display: inline-block; font-size: small !important; }
 ul.parks-list  { column-count: 4; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
 ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
-ul.parks-list li { list-style: none; }
+ul.parks-list li { list-style: none; list-style-type: none; }
 ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
-ul.hikes-list li { list-style: none; }
+ul.hikes-list li { list-style: none; list-style-type: none; }
 
 /** Bullet Icons */
 .bullet-icon:before { font-family: "Font Awesome 5 Free"; margin: 0 5px 0 -20px; display: inline-block; vertical-align: middle; }
