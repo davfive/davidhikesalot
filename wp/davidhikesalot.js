@@ -1,15 +1,13 @@
+const smallMedia = window.matchMedia("only screen and (max-width: 768px)").matches
+const parksSheetUrl = "https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/ooywmlb/public/values?alt=json"
+const hikesSheetUrl = "https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/o6rptkw/public/values?alt=json"
+const cellText = (row, id) => { return row["gsx$"+id]["$t"]; }
+const cellIsEmpty = (row,id) => (["","--"].indexOf(cellText(row,id)) >= 0)
+const hikeStatuses = ["nexthike", "planned", "completed"]
+const parkAnchor = (name) => name.replace(/[^\w]/g,'-').toLowerCase()
+
 $(document).ready(function() {
-  $.LoadingOverlay("show")
-
-  const smallMedia = window.matchMedia("only screen and (max-width: 768px)").matches
-  const parksSheetUrl = "https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/ooywmlb/public/values?alt=json"
-  const hikesSheetUrl = "https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/o6rptkw/public/values?alt=json"
-  const cellText = (row, id) => { return row["gsx$"+id]["$t"]; }
-  const cellIsEmpty = (row,id) => (["","--"].indexOf(cellText(row,id)) >= 0)
-  const hikeStatuses = ["nexthike", "planned", "completed"]
-
   $.when($.getJSON(parksSheetUrl), $.getJSON(hikesSheetUrl)).done(function(parksSheet, hikesSheet) {
-    const parkAnchor = (name) => name.replace(/[^\w]/g,'-').toLowerCase()
     const Hikes = {}
     const Stats = {
       completed: { parks: 0, hikes: 0, distance: 0.0, elevation: 0.0 },
@@ -158,7 +156,5 @@ $(document).ready(function() {
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        | Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
     `)
-    $.LoadingOverlay("hide")
-    $("#pageContent").css('visibility', 'visible');
   })
 })
