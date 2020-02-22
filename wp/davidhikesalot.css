@@ -30,7 +30,7 @@ ul.status-list li { display: inline-block; list-style: none; list-style-type: no
 ul.parks-list  { column-count: 3; margin-left: 5px; padding-left: 20px; font-size: small !important; }
 ul.parks-list li { list-style: none; list-style-type: none; }
 
-ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; font-size: small !important; }
+ul.hikes-list  { column-count: 2; margin-left: 5px; padding-left:20px; font-size: small !important; }
 ul.hikes-list li { list-style: none; list-style-type: none; }
 
 /** Bullet Icons */
