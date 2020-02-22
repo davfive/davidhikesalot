@@ -72,6 +72,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 
 /* Mobile Overrides (single column, don't show big images) */
 @media only screen and (max-width: 768px) {
+  #sectionParkDetails .park-card-image { display: none; }
   ul.status-list li { float: unset }
   ul.parks-list { column-count: 1; }
   ul.hikes-list { column-count: 1; }
