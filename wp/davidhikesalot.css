@@ -4,6 +4,16 @@
  * - Font Awesome 5 Free
 */
 
+/** WP Natural Lite Theme Overrides */
+a, a:link, a:visited {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
 /** Global overrides */
 ul { margin-bottom: 10px; }
 
@@ -14,7 +24,7 @@ ul { margin-bottom: 10px; }
 .page-section    h6:first-of-type { margin-top: 0; }
 .page-subsection h6 { margin-bottom: 0px; font-weight: bold; }
 
-ul.status-list { margin-left: 5px; font-size: small !important; }
+ul.status-list { padding-left: 0px; font-size: small !important; }
 ul.status-list li { display: inline-block; list-style: none; list-style-type: none; }
 
 ul.parks-list  { column-count: 3; margin-left: 5px; padding-left: 20px; font-size: small !important; }
