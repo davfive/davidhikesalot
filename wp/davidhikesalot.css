@@ -5,13 +5,8 @@
 */
 
 /** Global overrides */
-h3, h4 { margin-bottom: 5px; }
 ul { margin-bottom: 10px; }
-.content-areanbt { padding-top: 0px; }
-.site-contentnbt-hide {
-  background-image: url("https://drive.google.com/uc?id=132UIE8S_Yc0H0jaBhs1XyKV-B4REeXwL");
-  background-repeat: repeat-x;
-}
+
 .capitalize { text-transform: capitalize; }
 .small-text {font-size: small !important;}
 
@@ -19,11 +14,13 @@ ul { margin-bottom: 10px; }
 .page-section    h6:first-of-type { margin-top: 0; }
 .page-subsection h6 { margin-bottom: 0px; font-weight: bold; }
 
-ul.status-list { margin-left: 0px; list-style: none; display: inline-block; font-size: small !important; }
-ul.parks-list  { column-count: 4; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
-ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
+ul.status-list { margin-left: 5px; font-size: small !important; }
+ul.status-list li { display: inline-block; list-style: none; list-style-type: none; }
+
+ul.parks-list  { column-count: 3; margin-left: 5px; padding-left: 20px; font-size: small !important; }
 ul.parks-list li { list-style: none; list-style-type: none; }
-ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
+
+ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; font-size: small !important; }
 ul.hikes-list li { list-style: none; list-style-type: none; }
 
 /** Bullet Icons */
