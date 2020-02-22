@@ -34,6 +34,7 @@ ul.hikes-list  { column-count: 2; margin-left: 5px; padding-left:20px; font-size
 ul.hikes-list li { list-style: none; list-style-type: none; }
 
 /** Bullet Icons */
+.bullet-icon { list-style: none; list-style-type: none; }
 .bullet-icon:before { font-family: "Font Awesome 5 Free"; margin: 0 5px 0 -20px; display: inline-block; vertical-align: middle; }
 .status-icon:before { font-family: "Font Awesome 5 Free"; margin: 0 5px; }
 
