@@ -19,11 +19,11 @@ ul { margin-bottom: 10px; }
 .page-section    h6:first-of-type { margin-top: 0; }
 .page-subsection h6 { margin-bottom: 0px; font-weight: bold; }
 
-ul.status-list { margin-left: 0px; list-style: none; display: inline-block; font-size: small !important; }
+ul.status-list { margin-left: 0px; display: inline-block; font-size: small !important; }
 ul.status-list li { float: left; list-style: none !important; }
 ul.parks-list  { column-count: 4; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
-ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
 ul.parks-list li { float: left; list-style: none !important; }
+ul.hikes-list  { column-count: 3; margin-left: 5px; padding-left:20px; list-style: none; font-size: small !important; }
 ul.hikes-list li { float: left; list-style: none !important; }
 
 /** Bullet Icons */
