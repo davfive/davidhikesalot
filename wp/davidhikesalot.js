@@ -120,11 +120,11 @@ jQuery(document).ready(function($) {
           <img src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}"></a>
           `
       }
-      let parkDiv = `${parkAnchor}<div class="page-subsection card flex-row">
-        <div class="card-header bg-white">${map}</div>
-        <div class="card-block px-2">
-          <h4 class="card-title">${parkHeader}</h4>
-          <p class="card-text">
+      let parkDiv = `${parkAnchor}<div class="page-subsection park-card">
+        <div class="park-card-image">${map}</div>
+        <div class="park-card-content">
+          <h4>${parkHeader}</h4>
+          <p>
       `
 
       // Park Quick Links
@@ -154,7 +154,8 @@ jQuery(document).ready(function($) {
 
     $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
-       | Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
+       <br/>
+       Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
     `)
   })
 })

@@ -50,14 +50,15 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 
 
 /* Park Details */
-#sectionParkDetails img { object-fit: contain; width: 20vw /* so the map always vertically fits on page */; }
+#sectionParkDetails .park-card-image {
+  float: left;
+}
+#sectionParkDetails .park-card-image img {
+  object-fit: contain; width: 20vw /* so the map always vertically fits on page */; 
+}
 
 /* Mobile Overrides (single column, don't show big images) */
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
-  .site-descriptionnbt { line-height: 1.75em; padding: 10px 20px; }
-  .site-brandingnbt { margin: 20px auto 0 auto; }
-  .post-title.entry-title { margin-top: 0; }
   ul.status-list li { float: unset }
   ul.parks-list { column-count: 1; }
   ul.hikes-list { column-count: 1; }
