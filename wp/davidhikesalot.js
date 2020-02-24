@@ -165,15 +165,18 @@ jQuery(document).ready(function($) {
       const sel = $(this).find('option:selected')
       window.location.hash = `#${sel[0].value}`
     })
-    if (location.hash) {
-      location.href = location.hash
-    }
 
     $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        <br/>
        Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
     `)
+  })
 
+  jQuery(window).load(function() {
+    // page is fully loaded, including all frames, objects and images
+    if (location.hash) {
+      location.href = location.hash
+    }
   })
 })
