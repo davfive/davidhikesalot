@@ -116,7 +116,7 @@ jQuery(document).ready(function($) {
       const parkStatus = ` (${cellText(parkSheetRow,'completionstatus')})`
       const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
       const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatus}${hikesLeft}`
-      goToParkOptions.push({id: parkAnchor, name: parkName})
+      goToParkOptions.push({id: parkAnchorID, name: parkName})
 
       // Parks Hiked Map
       let map = '<img src="//placehold.it/200" alt="">'
@@ -159,8 +159,8 @@ jQuery(document).ready(function($) {
     })
 
     goToParkOptions.sort((a,b) => a.name.localeCompare(b.name))
-    parkSelectOptions = goToParkOptions.reduce((list, parkInfo) => {
-      list += `<option value="${parkInfo.anchor}">${parkInfo.name}</option>`
+    parkSelectOptions = goToParkOptions.reduce((list, park) => {
+      list += `<option value="${park.anchorID}">${park.name}</option>`
     },'')
     $("select#goToPark").append(parkSelectOptions)
 
