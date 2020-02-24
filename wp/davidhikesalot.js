@@ -165,11 +165,8 @@ jQuery(document).ready(function($) {
       const sel = $(this).find('option:selected')
       window.location.hash = `#${sel[0].value}`
     })
-    if (window.location.hash) {
-      // In case they asked for it first.
-      $('html, body').animate({
-        scrollTop: ($(`.park-card.${window.location.hash.slice(1)}`).offset() || {}).top || 0 + 'px'
-      }, 500)
+    if (location.hash) {
+      location.href = location.hash
     }
 
     $("#hikingStats").append(`
