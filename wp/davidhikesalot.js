@@ -166,6 +166,12 @@ jQuery(document).ready(function($) {
       window.scrollTo(0, $(`.park-card.${sel[0].value}`).offset().top - 50)
     })
 
+    if (location.hash) {
+      setTimeout(function() {
+        location.href = location.hash
+      }, 500)
+    }
+
     $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        <br/>
