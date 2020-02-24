@@ -163,7 +163,7 @@ jQuery(document).ready(function($) {
 
     $('select#goToPark').change(function() {
       const sel = $(this).find('option:selected')
-      window.scrollTo(0, $(`.park-card.${sel[0].value}`).offset().top - 50)
+      window.scrollTo(0, $(`a#${sel[0].value}.anchor`).offset().top - 50)
     })
 
     $("#hikingStats").append(`
