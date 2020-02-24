@@ -160,8 +160,9 @@ jQuery(document).ready(function($) {
       return list
     },'')
     $('select#goToPark').append(parkSelectOptions)
-    $('select#goToPark').change(function(e){
-      location.hash = '#' + $('select#goToPark').find(':selected').val()
+    $('select#goToPark').change(function(e) {
+      const sel = $(this).find('option:selected')
+      location.hash = `#${sel.value}`
     });
 
     $("#hikingStats").append(`
