@@ -76,10 +76,22 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   display: block; position: relative; top: -50px; visibility: hidden;
 }
 
+#goToParkForm {
+  display: flex;
+  margin-bottom: 5px;
+}
+
 #goToParkForm label {
-  display: inline;
+  display: inline-block;
   padding-right: 4px;
-  font-size: 1.2em;
+  font-size: 1.25em;
+}
+
+#goToParkForm select {
+  padding: 5px;
+  font-size: 16px;
+  line-height: 1;
+  height: 34px;
 }
 
 /* Mobile Overrides (single column, don't show big images) */
