@@ -162,7 +162,7 @@ jQuery(document).ready(function($) {
     $('select#goToPark').append(parkSelectOptions)
     $('select#goToPark').change(function(e) {
       const sel = $(this).find('option:selected')
-      location.hash = `#${sel.value}`
+      location.hash = `#${sel[0].value}`
     });
 
     $("#hikingStats").append(`
