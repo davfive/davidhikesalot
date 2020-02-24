@@ -14,6 +14,35 @@ jQuery(document).ready(function($) {
       completed: { parks: 0, hikes: 0, distance: 0.0, elevation: 0.0 },
       planned:   { hikes: 0, distance: 0.0, elevation: 0.0 },
     }
+    const ParkStats = {}
+    const updateParkStats = (park, hikeStatus, distance, elevation) => {
+      if (! (park in ParkStats)) {
+        ParkStats[park] = {
+          total: { hikes: 0, distance: 0.0, elevation: 0.0 },
+          completed: { hikes: 0, distance: 0.0, elevation: 0.0 },
+          planned:   { hikes: 0, distance: 0.0, elevation: 0.0 },
+        }
+      }
+      const statType = (hikeStatus === "completed") ? "completed" : "planned"
+      ParkStats[park].total.hikes++
+      ParkStats[park].total.distance  += isNaN(distance) ? 0 : distance 
+      ParkStats[park].total.elevation += isNaN(elevation) ? 0 : elevation
+      ParkStats[park][statType].hikes++
+      ParkStats[park][statType].distance  += isNaN(distance) ? 0 : distance 
+      ParkStats[park][statType].elevation += isNaN(elevation) ? 0 : elevation
+    }
+    const parkHikesStr = (park, parkSheetRow) => {
+      const totalHikes = cellText(parkSheetRow,'hikesleft') 
+        ? cellText(parkSheetRow,'hikesleft')
+        : (park in ParkStats && ParkStats[park].total.hikes)
+          ? ParkStats[park].total.hikes : '?'
+
+      if (park in ParkStats) {
+        return ` (${ParkStats[park].completed.hikes}/$totalHikes)`
+      } else {
+        return ` (${totalHikes} left)`
+      }
+    }
     hikesSheet[0].feed.entry.forEach(function(hikesSheetRow) {
        const parkName   = cellText(hikesSheetRow, "parkname")
        const hikeName   = cellText(hikesSheetRow, "hikename")
@@ -30,7 +59,8 @@ jQuery(document).ready(function($) {
        const distance  = parseFloat(cellText(hikesSheetRow, "distance"))
        const elevation = parseFloat(cellText(hikesSheetRow, "elevation")) 
 
-       const statType = (hikeStatus === "completed") ? "completed" : "planned"
+       updateParkStats(parkName, hikeStatus, distance, elevation)
+       const statType = (hikeStatus === "completed") ? "completed" : "planned"       
        Stats[statType].hikes++
        Stats[statType].distance  += isNaN(distance) ? 0 : distance 
        Stats[statType].elevation += isNaN(elevation) ? 0 : elevation
@@ -44,12 +74,11 @@ jQuery(document).ready(function($) {
       const missingHikesFlag = cellIsEmpty(parkSheetRow, "trailshikedid")
       const parkAnchorID=cellText(parkSheetRow,'parkname').replace(/[^\w]/g,'-').toLowerCase()
       const missingHikesMarker = (missingHikesFlag) ? ' ...' : ""
-      const hikesLeft = (cellText(parkSheetRow,'hikesleft')) ? ` - ${cellText(parkSheetRow,'hikesleft')} left` : ''
 
       // Update Park Lists
       const parksListLi = `
         <li class="bullet-icon ${cellText(parkSheetRow,'completionstatus')}">
-           <a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow,'parkname')}</a>${hikesLeft}${missingHikesMarker}
+           <a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow,'parkname')}</a>${parkHikesStr(parkName, parkSheetRow)}${missingHikesMarker}
         </li>`
       switch (cellText(parkSheetRow,'completionstatus')) {
         case 'no-hikes':
@@ -111,7 +140,7 @@ jQuery(document).ready(function($) {
       const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
       const parkStatus = ` (${cellText(parkSheetRow,'completionstatus')})`
       const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
-      const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatus}${hikesLeft}`
+      const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatus}${parkHikesStr(parkName, parkSheetRow)}`
       goToParkOptions.push({id: parkAnchorID, name: parkName})
 
       // Parks Hiked Map
