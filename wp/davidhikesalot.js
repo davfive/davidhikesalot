@@ -31,14 +31,14 @@ jQuery(document).ready(function($) {
       ParkStats[park][statType].distance  += isNaN(distance) ? 0 : distance 
       ParkStats[park][statType].elevation += isNaN(elevation) ? 0 : elevation
     }
-    const parkHikesStr = (park, parkSheetRow) => {
+    const parkHikesStr = (park, parkStatus, parkSheetRow) => {
       const totalHikes = cellText(parkSheetRow,'hikesleft') 
         ? cellText(parkSheetRow,'hikesleft')
         : (park in ParkStats && ParkStats[park].total.hikes)
           ? ParkStats[park].total.hikes : '?'
 
       if (park in ParkStats) {
-        return ` (${ParkStats[park].completed.hikes}/${totalHikes})`
+        return parkStatus === 'completed' ? `(${totalHikes} hikes)` : `(${ParkStats[park].completed.hikes}/${totalHikes})`
       } else {
         return ` (${totalHikes} left)`
       }
@@ -67,7 +67,7 @@ jQuery(document).ready(function($) {
     })
     parksSheet[0].feed.entry.forEach(function(parkSheetRow) {
       const parkName = cellText(parkSheetRow,"parkname")
-
+      const parkStatus = cellText(parkSheetRow,'completionstatus')
       /** PARKS LIST */
 
       // Gather Park info
@@ -78,7 +78,7 @@ jQuery(document).ready(function($) {
       // Update Park Lists
       const parksListLi = `
         <li class="bullet-icon ${cellText(parkSheetRow,'completionstatus')}">
-           <a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow,'parkname')}</a>${parkHikesStr(parkName, parkSheetRow)}${missingHikesMarker}
+           <a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow,'parkname')}</a>${parkHikesStr(parkName, parkStatus, parkSheetRow)}${missingHikesMarker}
         </li>`
       switch (cellText(parkSheetRow,'completionstatus')) {
         case 'no-hikes':
@@ -138,9 +138,9 @@ jQuery(document).ready(function($) {
       // Park Header
       const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
       const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
-      const parkStatus = ` (${cellText(parkSheetRow,'completionstatus')})`
+      const parkStatusStr = ` (${parkStatus})`
       const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
-      const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatus}${parkHikesStr(parkName, parkSheetRow)}`
+      const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatusStr}${parkHikesStr(parkName, parkStatus, parkSheetRow)}`
       goToParkOptions.push({id: parkAnchorID, name: parkName})
 
       // Parks Hiked Map
