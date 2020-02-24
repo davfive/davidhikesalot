@@ -170,7 +170,7 @@ jQuery(document).ready(function($) {
       // If someone comes with an anchor, go there (after the images have loaded)
       setTimeout(function() {
         location.href = location.hash
-      }, 1500)
+      }, 2000)
     }
 
     $("#hikingStats").append(`
