@@ -49,7 +49,7 @@ jQuery(document).ready(function($) {
       // Update Park Lists
       const parksListLi = `
         <li class="bullet-icon ${cellText(parkSheetRow,'completionstatus')}">
-           <a href="#${parkAnchorID}">${cellText(parkSheetRow,'parkname')}</a>${hikesLeft}${missingHikesMarker}
+           <a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow,'parkname')}</a>${hikesLeft}${missingHikesMarker}
         </li>`
       switch (cellText(parkSheetRow,'completionstatus')) {
         case 'no-hikes':
@@ -167,6 +167,7 @@ jQuery(document).ready(function($) {
     })
 
     if (location.hash) {
+      // If someone comes with an anchor, go there (after the images have loaded)
       setTimeout(function() {
         location.href = location.hash
       }, 500)
