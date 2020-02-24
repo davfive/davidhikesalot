@@ -116,7 +116,7 @@ jQuery(document).ready(function($) {
       const parkStatus = ` (${cellText(parkSheetRow,'completionstatus')})`
       const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
       const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatus}${hikesLeft}`
-      goToParkOptions.append({id: parkAnchor, name: parkName})
+      goToParkOptions.push({id: parkAnchor, name: parkName})
 
       // Parks Hiked Map
       let map = '<img src="//placehold.it/200" alt="">'
