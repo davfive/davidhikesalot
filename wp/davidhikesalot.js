@@ -168,9 +168,7 @@ jQuery(document).ready(function($) {
     if (window.location.hash) {
       // In case they asked for it first.
       $('html, body').animate({
-        scrollTop: function() {
-          $(`.park-card.${window.location.hash.slice(1)}`).offset().top
-        }
+        scrollTop: () => $(`.park-card.${window.location.hash.slice(1)}`).offset().top
       }, 500)
     }
 
