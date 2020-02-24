@@ -7,10 +7,6 @@ const hikeStatuses = ["nexthike", "planned", "completed"]
 const parkAnchor = (name) => name.replace(/[^\w]/g,'-').toLowerCase()
 const goToParkOptions = []
 
-function goToPark() {
-  location.hash = '#' + jQuery('#goToPark').find(':selected').val()
-}
-
 jQuery(document).ready(function($) {
   $.when($.getJSON(parksSheetUrl), $.getJSON(hikesSheetUrl)).done(function(parksSheet, hikesSheet) {
     const Hikes = {}
@@ -163,12 +159,16 @@ jQuery(document).ready(function($) {
       list += `<option value="${park.anchorID}">${park.name}</option>`
       return list
     },'')
-    $("select#goToPark").append(parkSelectOptions)
+    $('select#goToPark').append(parkSelectOptions)
+    $('select#goToPark').change(function(){
+      location.hash = '#' + jQuery('select#goToPark').find(':selected').val()
+    });
 
     $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        <br/>
        Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
     `)
+
   })
 })
