@@ -8,7 +8,7 @@ const parkAnchor = (name) => name.replace(/[^\w]/g,'-').toLowerCase()
 const goToParkOptions = []
 
 function goToPark() {
-
+  location.hash = '#' + jQuery('#goToPark').find(':selected').val()
 }
 
 jQuery(document).ready(function($) {
