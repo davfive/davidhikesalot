@@ -160,7 +160,7 @@ jQuery(document).ready(function($) {
 
     goToParkOptions.sort((a,b) => a.name.localeCompare(b.name))
     parkSelectOptions = goToParkOptions.reduce((list, parkInfo) => {
-      list += `<option value="${parkInfo.anchor}">${parkName}</option>`
+      list += `<option value="${parkInfo.anchor}">${parkInfo.name}</option>`
     },'')
     $("select#goToPark").append(parkSelectOptions)
 
