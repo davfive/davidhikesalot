@@ -5,6 +5,11 @@ const cellText = (row, id) => { return row["gsx$"+id]["$t"]; }
 const cellIsEmpty = (row,id) => (["","--"].indexOf(cellText(row,id)) >= 0)
 const hikeStatuses = ["nexthike", "planned", "completed"]
 const parkAnchor = (name) => name.replace(/[^\w]/g,'-').toLowerCase()
+const goToParkOptions = []
+
+function goToPark() {
+
+}
 
 jQuery(document).ready(function($) {
   $.when($.getJSON(parksSheetUrl), $.getJSON(hikesSheetUrl)).done(function(parksSheet, hikesSheet) {
@@ -111,6 +116,7 @@ jQuery(document).ready(function($) {
       const parkStatus = ` (${cellText(parkSheetRow,'completionstatus')})`
       const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
       const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatus}${hikesLeft}`
+      goToParkOptions.append({id: parkAnchor, name: parkName})
 
       // Parks Hiked Map
       let map = '<img src="//placehold.it/200" alt="">'
@@ -151,6 +157,12 @@ jQuery(document).ready(function($) {
       parkDiv += '</div></div><br>'
       $("#sectionParkDetailsCards").append(parkDiv)
     })
+
+    goToParkOptions.sort((a,b) => a.localCompare(b))
+    parkSelectOptions = goToParkOptions.reduce((list, parkInfo) => {
+      list += `<option value="${parkInfo.anchor}">${parkName}</option>`
+    },'')
+    $("select#goToPark").append(parkSelectOptions)
 
     $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
