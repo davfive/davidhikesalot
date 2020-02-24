@@ -122,7 +122,7 @@ jQuery(document).ready(function($) {
           <img src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}"></a>
           `
       }
-      let parkDiv = `${parkAnchor}<div class="page-subsection park-card">
+      let parkDiv = `${parkAnchor}<div class="page-subsection park-card ${parkAnchorID}">
         <div class="park-card-image">${map}</div>
         <div class="park-card-content">
           <h5>${parkHeader}</h5>
@@ -169,7 +169,7 @@ jQuery(document).ready(function($) {
       // In case they asked for it first.
       $('html, body').animate({
         scrollTop: function() {
-          $(window.location.hash).offset().top
+          $(`.park-card.${window.location.hash.slice(1)}`).offset().top
         }
       }, 500)
     }
