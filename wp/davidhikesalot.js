@@ -158,7 +158,7 @@ jQuery(document).ready(function($) {
       $("#sectionParkDetailsCards").append(parkDiv)
     })
 
-    goToParkOptions.sort((a,b) => a.name.localCompare(b.name))
+    goToParkOptions.sort((a,b) => a.name.localeCompare(b.name))
     parkSelectOptions = goToParkOptions.reduce((list, parkInfo) => {
       list += `<option value="${parkInfo.anchor}">${parkName}</option>`
     },'')
