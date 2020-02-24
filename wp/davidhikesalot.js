@@ -168,7 +168,9 @@ jQuery(document).ready(function($) {
     if (window.location.hash) {
       // In case they asked for it first.
       $('html, body').animate({
-        scrollTop: $(window.location.hash).offset().top
+        scrollTop: function() {
+          $(window.location.hash).offset().top
+        }
       }, 500)
     }
 
