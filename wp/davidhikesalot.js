@@ -163,21 +163,15 @@ jQuery(document).ready(function($) {
 
     $('select#goToPark').change(function() {
       const sel = $(this).find('option:selected')
-      window.scrollTo($(`.park-card.${sel.value}`).offset().top, 0)
+      const offset = $(`.park-card.${sel.value}`).offset()
+      window.scrollTo(offset.top, 0)
     })
-    
+
     $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        <br/>
        Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
     `)
 
-  })
-
-  jQuery(window).load(function() {
-    // page is fully loaded, including all frames, objects and images
-    if (window.location.hash) {
-      window.location.href = window.location.hash
-    }
   })
 })
