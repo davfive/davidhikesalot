@@ -85,13 +85,14 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 
 #goToParkForm label {
   display: inline-block;
-  padding-right: 4px;
-  font-size: 1.25em;
+  font-size: 1.1em;
   line-height: 1;
+  padding-right: 4px;
+  margin: 4px 0 0 0;
 }
 
 #goToParkForm select {
-  font-size: 1.25em;
+  font-size: 0.8em;
   line-height: 1;
 }
 
