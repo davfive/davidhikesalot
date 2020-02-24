@@ -107,7 +107,7 @@ jQuery(document).ready(function($) {
       /** PARKS DETAIL */
       
       // Park Header
-      const parkAnchor = `<a name="${parkAnchorID}"></a>`
+      const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
       const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
       const parkStatus = ` (${cellText(parkSheetRow,'completionstatus')})`
       const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
