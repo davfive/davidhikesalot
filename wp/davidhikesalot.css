@@ -79,19 +79,24 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 #goToParkForm {
   display: flex;
   margin-bottom: 5px;
+  font-size: 1.25em;
+  line-height: 1;
 }
 
 #goToParkForm label {
   display: inline-block;
   padding-right: 4px;
   font-size: 1.25em;
+  line-height: 1;
 }
 
 #goToParkForm select {
-  padding: 5px;
-  font-size: 16px;
+  font-size: 1.25em;
   line-height: 1;
-  height: 34px;
+}
+
+#goToParkForm select:focus {
+  outline: none;
 }
 
 /* Mobile Overrides (single column, don't show big images) */
