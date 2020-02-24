@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
           ? ParkStats[park].total.hikes : '?'
 
       if (park in ParkStats) {
-        return parkStatus === 'completed' ? `(${totalHikes} hikes)` : `(${ParkStats[park].completed.hikes}/${totalHikes})`
+        return parkStatus === 'completed' ? ` (${totalHikes} hikes)` : ` (${ParkStats[park].completed.hikes}/${totalHikes})`
       } else {
         return ` (${totalHikes} left)`
       }
