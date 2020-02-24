@@ -71,6 +71,11 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   padding: 0 10px;
 }
 
+#sectionParkDetails a.anchor {
+  /* Allows jumping to anchor to keep the full card in view */
+  display: block; position: relative; top: -20px; visibility: hidden;
+}
+
 /* Mobile Overrides (single column, don't show big images) */
 @media only screen and (max-width: 768px) {
   #sectionParkDetails .park-card-image { display: none; }
