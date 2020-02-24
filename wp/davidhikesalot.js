@@ -163,7 +163,7 @@ jQuery(document).ready(function($) {
 
     $('select#goToPark').change(function() {
       const sel = $(this).find('option:selected')
-      const offset = $(`.park-card.${sel.value}`).offset()
+      const offset = $(`.park-card.morgan-territory`).offset()
       window.scrollTo(offset.top, 0)
     })
 
