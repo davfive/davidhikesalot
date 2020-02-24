@@ -163,13 +163,13 @@ jQuery(document).ready(function($) {
 
     $('select#goToPark').change(function() {
       const sel = $(this).find('option:selected')
-      location.hash = `#${sel[0].value}`
+      window.location.hash = `#${sel[0].value}`
     })
-    if (location.hash.length) {
-      // If someone asked for it, do it now.
-      const hash = location.hash
-      location.hash = ''
-      location.hash = hash
+    if (window.location.hash) {
+      // In case they asked for it first.
+      $('html, body').animate({
+        scrollTop: $(window.location.hash).offset().top
+      }, 500)
     }
 
     $("#hikingStats").append(`
