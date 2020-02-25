@@ -149,7 +149,7 @@ jQuery(document).ready(function($) {
         const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
         const parkStatusStr = ` (${parkStatus})`
         const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
-        const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatusStr}${parkHikesStr(parkName, parkStatus, parkSheetRow)}`
+        const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkHikesStr(parkName, parkStatus, parkSheetRow)}`
         goToParkOptions.push({id: parkAnchorID, name: parkName})
 
         // Parks Hiked Map
