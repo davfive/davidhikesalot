@@ -186,6 +186,11 @@ jQuery(document).ready(function($) {
       })
       parkDiv += '</div></div><br>'
       $("#sectionParkDetailsCards").append(parkDiv)
+        
+      // Add lozad/lazy loading to dynamically added elementsbe
+      // Goes hrre because if I put it at the end, no images load for a while.
+      // might need to check performance
+      observer.observe();
     })
 
     goToParkOptions.sort((a,b) => a.name.localeCompare(b.name))
@@ -211,9 +216,6 @@ jQuery(document).ready(function($) {
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        <br/>
        Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
-    `) 
-    
-    // Add lozad/lazy loading to dynamically added elements
-    observer.observe();
+    `)   
   })
 })
