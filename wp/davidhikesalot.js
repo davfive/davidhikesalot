@@ -139,7 +139,7 @@ jQuery(document).ready(function($) {
       /** PARKS DETAIL */
       
       // Park Header
-      if (ParkStats[parkName].total.hikes) {
+      if (parkName in ParkStats && ParkStats[parkName].total.hikes) {
         const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
         const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
         const parkStatusStr = ` (${parkStatus})`
