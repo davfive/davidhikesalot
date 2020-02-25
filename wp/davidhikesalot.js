@@ -28,14 +28,14 @@ jQuery(document).ready(function($) {
       }
       const statType = (hikeStatus === "completed") ? "completed" : "planned"
       ParkStats[park].total.hikes++
-      ParkStats[park].total.distance  += isNaN(distance) ? 0 : distance 
+      ParkStats[park].total.distance  += isNaN(distance) ? 0 : distance
       ParkStats[park].total.elevation += isNaN(elevation) ? 0 : elevation
       ParkStats[park][statType].hikes++
-      ParkStats[park][statType].distance  += isNaN(distance) ? 0 : distance 
+      ParkStats[park][statType].distance  += isNaN(distance) ? 0 : distance
       ParkStats[park][statType].elevation += isNaN(elevation) ? 0 : elevation
     }
     const parkHikesStr = (park, parkStatus, parkSheetRow) => {
-      const totalHikes = cellText(parkSheetRow,'hikesleft') 
+      const totalHikes = cellText(parkSheetRow,'hikesleft')
         ? cellText(parkSheetRow,'hikesleft')
         : (park in ParkStats && ParkStats[park].total.hikes)
           ? ParkStats[park].total.hikes : '?'
@@ -49,28 +49,30 @@ jQuery(document).ready(function($) {
     hikesSheet[0].feed.entry.forEach(function(hikesSheetRow) {
        const parkName   = cellText(hikesSheetRow, "parkname")
        const hikeName   = cellText(hikesSheetRow, "hikename")
-       if (!parkName || !hikeName) return // Not a hike       
+       if (!parkName || !hikeName) return // Not a hike
 
        const hikeStatus = cellText(hikesSheetRow, "hikestatus")
-       if (! (parkName in Hikes)) { 
+       if (! (parkName in Hikes)) {
          Hikes[parkName] = { }
        }
        if (! (hikeStatus in Hikes[parkName])) Hikes[parkName][hikeStatus] = []
-       
+
        Hikes[parkName][hikeStatus].push(hikesSheetRow)
 
        const distance  = parseFloat(cellText(hikesSheetRow, "distance"))
-       const elevation = parseFloat(cellText(hikesSheetRow, "elevation")) 
+       const elevation = parseFloat(cellText(hikesSheetRow, "elevation"))
 
        updateParkStats(parkName, hikeStatus, distance, elevation)
-       const statType = (hikeStatus === "completed") ? "completed" : "planned"       
+       const statType = (hikeStatus === "completed") ? "completed" : "planned"
        Stats[statType].hikes++
-       Stats[statType].distance  += isNaN(distance) ? 0 : distance 
+       Stats[statType].distance  += isNaN(distance) ? 0 : distance
        Stats[statType].elevation += isNaN(elevation) ? 0 : elevation
     })
     parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
       const parkName = cellText(parkSheetRow,"parkname")
       const parkStatus = cellText(parkSheetRow,'completionstatus')
+      const parkHasHikes = (parkName in ParkStats && ParkStats[parkName].total.hikes)
+
       /** PARKS LIST */
 
       // Gather Park info
@@ -79,15 +81,18 @@ jQuery(document).ready(function($) {
       const missingHikesMarker = (missingHikesFlag) ? ' ...' : ""
 
       // Update Park Lists
+      const listParkLink = (parkHasHikes)
+        ? `<a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow,'parkname')}</a>`
+        : `<a href="${cellText(parkSheetRow,'parkurl')}">${cellText(parkSheetRow,'parkname')}</a>`
       const parksListLi = `
         <li class="bullet-icon ${cellText(parkSheetRow,'completionstatus')}">
-           <a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow,'parkname')}</a>${parkHikesStr(parkName, parkStatus, parkSheetRow)}${missingHikesMarker}
+           ${listParkLink}${parkHikesStr(parkName, parkStatus, parkSheetRow)}${missingHikesMarker}
         </li>`
       switch (cellText(parkSheetRow,'completionstatus')) {
         case 'no-hikes':
           const li = `
             <li class="bullet-icon ${cellText(parkSheetRow,'completionstatus')}">
-              <a href="${cellText(parkSheetRow,'parkurl')}">${cellText(parkSheetRow,'parkname')}</a> <i class="fas fa-xs fa-external-link-alt"></i>
+              ${listParkLink} <i class="fas fa-xs fa-external-link-alt"></i>
             </li>`
           $("#parksNoHikes ul").append(li)
           return // No park details for no-hikes. Just jump them to the park website
@@ -127,7 +132,7 @@ jQuery(document).ready(function($) {
 
         Object.keys(Hikes[parkName]).forEach(hikeType => {
           Hikes[parkName][hikeType].forEach(hikeRow => {
-            
+
             hikes[hikeType].push(`<li class="bullet-icon ${hikeIcon(hikeRow)}">${parkName} ${hikeLink(hikeRow)} ${hikeStats(hikeRow)} ${hikePost(hikeRow)}</li>`)
           })
           if (hikes[hikeType].length) {
@@ -137,9 +142,9 @@ jQuery(document).ready(function($) {
       }
 
       /** PARKS DETAIL */
-      
+
       // Park Header
-      if (parkName in ParkStats && ParkStats[parkName].total.hikes) {
+      if (parkHasHikes) {
         const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
         const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
         const parkStatusStr = ` (${parkStatus})`
@@ -152,7 +157,7 @@ jQuery(document).ready(function($) {
         if (!missingHikesFlag) {
           map = `
             <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}">
-              <img class="lozad" 
+              <img class="lozad"
                 data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedmobileid')}"
                 data-srcset="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedwebid')} 768w">
             </a>
@@ -187,7 +192,7 @@ jQuery(document).ready(function($) {
         })
         parkDiv += '</div></div><br>'
         $("#sectionParkDetailsCards").append(parkDiv)
-      }          
+      }
 
       // Lozad - Lazy loading. Dynamically detect new images
       if (parkSheetIdx % 5 === 0) {
@@ -218,7 +223,7 @@ jQuery(document).ready(function($) {
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        <br/>
        Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
-    `)   
+    `)
 
     // Pick up the remaining ones
     lozadObserver.observe()
