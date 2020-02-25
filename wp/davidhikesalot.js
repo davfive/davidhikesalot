@@ -151,7 +151,7 @@ jQuery(document).ready(function($) {
         map = `
           <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}">
             <img class="lozad" 
-              data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedmobileid')}">
+              data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedmobileid')}"
               data-srcset="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedwebid')} 768w">
           </a>
         `
