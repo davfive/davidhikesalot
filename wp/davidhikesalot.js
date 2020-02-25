@@ -139,55 +139,55 @@ jQuery(document).ready(function($) {
       /** PARKS DETAIL */
       
       // Park Header
-      const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
-      const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
-      const parkStatusStr = ` (${parkStatus})`
-      const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
-      const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatusStr}${parkHikesStr(parkName, parkStatus, parkSheetRow)}`
-      goToParkOptions.push({id: parkAnchorID, name: parkName})
+      if (ParkStats[parkName].total.hikes) {
+        const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
+        const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
+        const parkStatusStr = ` (${parkStatus})`
+        const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
+        const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}${parkStatusStr}${parkHikesStr(parkName, parkStatus, parkSheetRow)}`
+        goToParkOptions.push({id: parkAnchorID, name: parkName})
 
-      // Parks Hiked Map
-      let map = '<img src="//placehold.it/200" alt="">'
-      if (!missingHikesFlag) {
-        map = `
-          <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}">
-            <img class="lozad" 
-              data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedmobileid')}"
-              data-srcset="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedwebid')} 768w">
-          </a>
-        `
-      }
-      let parkDiv = `${parkAnchor}<div class="page-subsection park-card ${parkAnchorID}">
-        <div class="park-card-image">${map}</div>
-        <div class="park-card-content">
-          <h5>${parkHeader}</h5>
-          <p>
-      `
-
-      // Park Quick Links
-      const quickLinks = []
-      const url2link = (id, text) => `<a target="_blank" href="${cellText(parkSheetRow, id)}">${text}</a> <i class="fas fa-xs fa-external-link-alt"></i>`
-      const id2link  = (id, text) => `<a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow, id)}">${text}</a> <i class="fas fa-xs fa-external-link-alt"></i>`
-      if (! cellIsEmpty(parkSheetRow,'parkurl'))          quickLinks.push(url2link('parkurl', 'Park Website'))
-      if (! cellIsEmpty(parkSheetRow,'trailmapid'))       quickLinks.push(id2link('trailmapid', 'Trail Map'))
-      if (! cellIsEmpty(parkSheetRow,'alltrailsparkurl')) quickLinks.push(url2link('alltrailsparkurl', 'All Trails Best Hikes'))
-      if (smallMedia && !missingHikesFlag)                quickLinks.push(id2link('trailshikedid', 'David\'s Hike Progress'))
-      const joiner = (smallMedia) ? '<br/>' : ' | '
-      parkDiv += `<span class="small-text">${quickLinks.join(joiner)}<span>`
-
-      // Park Hikes
-      hikeStatuses.forEach(hikeStatus => {
-        if (hikes[hikeStatus].length) {
-          parkDiv += `
-            <div class="small-text">
-              <span class="capitalize"><b>${hikeStatus}</b></span>
-              <ul>${hikes[hikeStatus].join("")}</ul>
-            </div>`
+        // Parks Hiked Map
+        let map = '<img src="//placehold.it/200" alt="">'
+        if (!missingHikesFlag) {
+          map = `
+            <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}">
+              <img class="lozad" 
+                data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedmobileid')}"
+                data-srcset="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedwebid')} 768w">
+            </a>
+          `
         }
-      })
-      parkDiv += '</div></div><br>'
-      $("#sectionParkDetailsCards").append(parkDiv)
-        
+        let parkDiv = `${parkAnchor}<div class="page-subsection park-card ${parkAnchorID}">
+          <div class="park-card-image">${map}</div>
+          <div class="park-card-content">
+            <h5>${parkHeader}</h5>
+            <p>
+        `
+
+        // Park Quick Links
+        const quickLinks = []
+        const url2link = (id, text) => `<a target="_blank" href="${cellText(parkSheetRow, id)}">${text}</a> <i class="fas fa-xs fa-external-link-alt"></i>`
+        const id2link  = (id, text) => `<a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow, id)}">${text}</a> <i class="fas fa-xs fa-external-link-alt"></i>`
+        if (! cellIsEmpty(parkSheetRow,'parkurl'))          quickLinks.push(url2link('parkurl', 'Park Website'))
+        if (! cellIsEmpty(parkSheetRow,'trailmapid'))       quickLinks.push(id2link('trailmapid', 'Trail Map'))
+        if (! cellIsEmpty(parkSheetRow,'alltrailsparkurl')) quickLinks.push(url2link('alltrailsparkurl', 'All Trails Best Hikes'))
+        const joiner = (smallMedia) ? '<br/>' : ' | '
+        parkDiv += `<span class="small-text">${quickLinks.join(joiner)}<span>`
+
+        // Park Hikes
+        hikeStatuses.forEach(hikeStatus => {
+          if (hikes[hikeStatus].length) {
+            parkDiv += `
+              <div class="small-text">
+                <span class="capitalize"><b>${hikeStatus}</b></span>
+                <ul>${hikes[hikeStatus].join("")}</ul>
+              </div>`
+          }
+        })
+        parkDiv += '</div></div><br>'
+        $("#sectionParkDetailsCards").append(parkDiv)
+      }          
 
       // Lozad - Lazy loading. Dynamically detect new images
       if (parkSheetIdx % 5 === 0) {
