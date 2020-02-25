@@ -105,7 +105,10 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   #header .site-title { font-size: 1.5em; }
   #header .site-description { font-size: 0.7em; }
   #sectionParkDetails .park-card { flex-direction: column-reverse; }
-  /* #sectionParkDetails .park-card-image { display: none; } */
+  #sectionParkDetails .park-card-image img {
+    border-radius: 0 0 5px 5px;
+    width: unset;
+  }
   ul.status-list li { float: unset }
   ul.parks-list { column-count: 1; }
   ul.hikes-list { column-count: 1; }
