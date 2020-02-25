@@ -8,8 +8,9 @@ const parkAnchor = (name) => name.replace(/[^\w]/g,'-').toLowerCase()
 const goToParkOptions = []
 
 jQuery(document).ready(function($) {
-  const observer = lozad();
-  observer.observe();
+  const lozadObserver = lozad();
+  lozadObserver.observe();
+
   $.when($.getJSON(parksSheetUrl), $.getJSON(hikesSheetUrl)).done(function(parksSheet, hikesSheet) {
     const Hikes = {}
     const Stats = {
@@ -67,7 +68,7 @@ jQuery(document).ready(function($) {
        Stats[statType].distance  += isNaN(distance) ? 0 : distance 
        Stats[statType].elevation += isNaN(elevation) ? 0 : elevation
     })
-    parksSheet[0].feed.entry.forEach(function(parkSheetRow) {
+    parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
       const parkName = cellText(parkSheetRow,"parkname")
       const parkStatus = cellText(parkSheetRow,'completionstatus')
       /** PARKS LIST */
@@ -187,10 +188,13 @@ jQuery(document).ready(function($) {
       parkDiv += '</div></div><br>'
       $("#sectionParkDetailsCards").append(parkDiv)
         
-      // Add lozad/lazy loading to dynamically added elementsbe
-      // Goes hrre because if I put it at the end, no images load for a while.
-      // might need to check performance
-      observer.observe();
+
+      // Lozad - Lazy loading. Dynamically detect new images
+      // Do it once after 5 images to allow for the visible
+      // Ones to load immediately, then once at the end to get the rest
+      if (parkSheetIdx === 4) {
+        lozadObserver.observe()
+      }
     })
 
     goToParkOptions.sort((a,b) => a.name.localeCompare(b.name))
@@ -217,5 +221,7 @@ jQuery(document).ready(function($) {
        <br/>
        Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
     `)   
+
+    lozadObserver.observe()
   })
 })
