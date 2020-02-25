@@ -147,7 +147,7 @@ jQuery(document).ready(function($) {
 
       // Parks Hiked Map
       let map = '<img src="//placehold.it/200" alt="">'
-      if (!smallMedia && !missingHikesFlag) {
+      if (!missingHikesFlag) {
         map = `
           <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}">
             <img class="lozad" 
