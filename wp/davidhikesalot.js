@@ -190,9 +190,7 @@ jQuery(document).ready(function($) {
         
 
       // Lozad - Lazy loading. Dynamically detect new images
-      // Do it once after 5 images to allow for the visible
-      // Ones to load immediately, then once at the end to get the rest
-      if (parkSheetIdx === 4) {
+      if (parkSheetIdx % 5 === 0) {
         lozadObserver.observe()
       }
     })
@@ -222,6 +220,7 @@ jQuery(document).ready(function($) {
        Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
     `)   
 
+    // Pick up the remaining ones
     lozadObserver.observe()
   })
 })
