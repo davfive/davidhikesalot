@@ -150,8 +150,11 @@ jQuery(document).ready(function($) {
       if (!smallMedia && !missingHikesFlag) {
         map = `
           <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}">
-          <img class="lozad" data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}"></a>
-          `
+            <img class="lozad" 
+              data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedmobileid')}">
+              data-srcset="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedwebid')} 768w">
+          </a>
+        `
       }
       let parkDiv = `${parkAnchor}<div class="page-subsection park-card ${parkAnchorID}">
         <div class="park-card-image">${map}</div>
