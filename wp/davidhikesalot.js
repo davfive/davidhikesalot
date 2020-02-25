@@ -8,6 +8,8 @@ const parkAnchor = (name) => name.replace(/[^\w]/g,'-').toLowerCase()
 const goToParkOptions = []
 
 jQuery(document).ready(function($) {
+  const observer = lozad();
+  observer.observe();
   $.when($.getJSON(parksSheetUrl), $.getJSON(hikesSheetUrl)).done(function(parksSheet, hikesSheet) {
     const Hikes = {}
     const Stats = {
@@ -148,7 +150,7 @@ jQuery(document).ready(function($) {
       if (!smallMedia && !missingHikesFlag) {
         map = `
           <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}">
-          <img src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}"></a>
+          <img class="lozad" data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow,'trailshikedid')}"></a>
           `
       }
       let parkDiv = `${parkAnchor}<div class="page-subsection park-card ${parkAnchorID}">
@@ -206,7 +208,9 @@ jQuery(document).ready(function($) {
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
        <br/>
        Planned: ${Stats.planned.hikes} hikes, ${Stats.planned.distance.toFixed(1).toLocaleString()}mi, ${Stats.planned.elevation.toLocaleString()}ft
-    `)
-
+    `) 
+    
+    // Add lozad/lazy loading to dynamically added elements
+    observer.observe();
   })
 })
