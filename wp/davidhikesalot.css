@@ -100,8 +100,13 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   outline: none;
 }
 
+.page-tips { line-height: 1; }
+.page-tips p { padding: 0; }
+.tap-or-click { content: 'Click'; }
+
 /* Mobile Overrides (single column, don't show big images) */
 @media only screen and (max-width: 768px) {
+  .tap-or-click { content: 'Tap'; }
   #header .site-title { font-size: 1.5em; }
   #header .site-description { font-size: 0.7em; }
   #sectionParkDetails .park-card { flex-direction: column-reverse; }
