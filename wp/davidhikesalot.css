@@ -100,8 +100,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   outline: none;
 }
 
-.page-tips { line-height: 1.2; }
-.page-tips p { padding: 0; }
+.page-tips p { line-height: 1.2; padding: 0; }
 .tap-or-click:after { content: 'Click'; }
 
 /* Mobile Overrides (single column, don't show big images) */
