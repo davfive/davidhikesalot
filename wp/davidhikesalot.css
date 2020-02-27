@@ -100,6 +100,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   outline: none;
 }
 
+.page-tips { margin-bottom: 5px;}
 .page-tips p { line-height: 1.2; padding: 0; }
 .tap-or-click:after { content: 'Click'; }
 
