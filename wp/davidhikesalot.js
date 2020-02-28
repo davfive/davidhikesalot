@@ -16,6 +16,8 @@ jQuery(document).ready(function($) {
     const Stats = {
       completed: { parks: 0, hikes: 0, distance: 0.0, elevation: 0.0 },
       planned:   { hikes: 0, distance: 0.0, elevation: 0.0 },
+      inprogress: { parks: 0 },
+      notstarted: { parks: 0 }
     }
     const ParkStats = {}
     const updateParkStats = (park, hikeStatus, distance, elevation) => {
@@ -103,10 +105,12 @@ jQuery(document).ready(function($) {
           break
 
         case 'not-started':
+          Stats.notstarted.parks++
           $("#parksNotStarted ul.parks-list").append(parksListLi)
           break
 
         default:
+          Stats.inprogress.parks++
           $("#parksInProgress ul.parks-list").append(parksListLi)
           break
       }
@@ -218,6 +222,10 @@ jQuery(document).ready(function($) {
         location.href = location.hash
       }, 2000)
     }
+
+    $("#parksCompleted h6").append(` (${Stats.completed.parks})`)
+    $("#parksInProgress h6").append(` (${Stats.inprogress.parks})`)
+    $("#parksNotStarted h6").append(` (${Stats.notstarted.parks})`)
 
     $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft
