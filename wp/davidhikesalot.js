@@ -223,9 +223,9 @@ jQuery(document).ready(function($) {
       }, 2000)
     }
 
-    $("#parksCompleted h6").append(` <span class="plain-text">(${Stats.completed.parks})</span>`)
-    $("#parksInProgress h6").append(` <span class="plain-text">(${Stats.inprogress.parks})</span>`)
-    $("#parksNotStarted h6").append(` <span class="plain-text">(${Stats.notstarted.parks})</span>`)
+    $("#parksCompleted h6").append(` <span class="park-list-count">(${Stats.completed.parks})</span>`)
+    $("#parksInProgress h6").append(` <span class="park-list-count">(${Stats.inprogress.parks})</span>`)
+    $("#parksNotStarted h6").append(` <span class="park-list-count">(${Stats.notstarted.parks})</span>`)
 
     $("#hikingStats").append(`
        Done: ${Stats.completed.parks} parks, ${Stats.completed.hikes} hikes, ${Stats.completed.distance.toFixed(1).toLocaleString()}mi, ${Stats.completed.elevation.toLocaleString()}ft

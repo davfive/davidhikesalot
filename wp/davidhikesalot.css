@@ -19,7 +19,7 @@ ul { margin-bottom: 10px; }
 
 .capitalize { text-transform: capitalize; }
 .small-text {font-size: small !important;}
-.plain-text {font-weight: normal;}
+.park-status-number {font-weight: normal; font-size: .9em;}
 
 #sectionParkDetails .card-header { padding: .75rem; }
 .page-section    h6:first-of-type { margin-top: 0; }
