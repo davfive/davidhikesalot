@@ -36,7 +36,7 @@ const getHikeListByStatus = (hikeStatus, parkName) => {
   }, [])
 }
 const parkInChallenge = parkRow => cellText(parkRow,'completionstatus') !== ''
-const challengeStatusToGroup = parkRow => {
+const parkGetProgress = parkRow => {
   const parkStatus = cellText(parkRow,'completionstatus')
   if (!parkStatus) return 
   switch (parkStatus) {
@@ -191,7 +191,7 @@ jQuery(document).ready(function($) {
         const thisProgress = challengeParksGroups[parkStatusDivId]
         $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${OverallStats[thisProgress].parks})</span>`)
 
-        Parks.filter(row => parkInChallenge(row) && getParkProgress(row) === thisProgress).forEach(parkSheetRow => {
+        Parks.filter(row => parkInChallenge(row) && parkGetProgress(row) === thisProgress).forEach(parkSheetRow => {
           const parkName = cellText(parkSheetRow, 'parkname')
           const parkAnchorID = parkName.replace(/[^\w]/g,'-').toLowerCase()
           const parkHasHikes = (parkName in ParkStats && ParkStats[parkName].total.hikes)
