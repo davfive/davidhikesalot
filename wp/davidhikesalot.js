@@ -226,7 +226,7 @@ jQuery(document).ready(function($) {
           name: cellText(hikeRow, 'hikename'),
           date: moment(cellText(hikeRow, 'hikedate')),
         }
-        let entry = `
+        const entry = `
           <div class="page-subsection journal-card">
             <div class="journal-card-date">
               <time datetime="${hikeInfo.date.format('L')}" class="icon">
@@ -243,7 +243,7 @@ jQuery(document).ready(function($) {
         entries.push(entry)
       })
       if (entries.length) {
-        $(`#sectionJournal`).append(entries.(''))
+        $('#sectionJournal').append(entries.join(''))
       }
     }
 
