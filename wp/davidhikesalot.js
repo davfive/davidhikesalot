@@ -35,9 +35,9 @@ const getHikeListByStatus = (hikeStatus, parkName) => {
     return hikes
   }, [])
 }
-const parkInChallenge = parkRow => cellText(parkRow,'completionstatus') !== ''
+const parkInChallenge = parkRow => cellText(parkRow,'eastbaychallenge') !== ''
 const parkGetProgress = parkRow => {
-  const parkStatus = cellText(parkRow,'completionstatus')
+  const parkStatus = cellText(parkRow,'eastbaychallenge')
   if (!parkStatus) return 
   switch (parkStatus) {
     case 'completed': return 'completed'
@@ -147,7 +147,7 @@ jQuery(document).ready(function($) {
       if (!parkName) return // Not a park
       Parks.push(parkSheetRow)
 
-      const parkStatus = cellText(parkSheetRow,'completionstatus')
+      const parkStatus = cellText(parkSheetRow,'eastbaychallenge')
       updateChallengeStats(parkStatus)
     })
 
@@ -193,7 +193,7 @@ jQuery(document).ready(function($) {
 
         Parks.filter(row => parkInChallenge(row) && parkGetProgress(row) === thisProgress).forEach(parkSheetRow => {
           const parkName = cellText(parkSheetRow, 'parkname')
-          const parkStatus = cellText(parkSheetRow, 'parkstatus')
+          const parkStatus = cellText(parkSheetRow, 'eastbaychallenge')
           const parkAnchorID = parkName.replace(/[^\w]/g,'-').toLowerCase()
           const parkHasHikes = (parkName in ParkStats && ParkStats[parkName].total.hikes)
           const missingHikesFlag = cellIsEmpty(parkSheetRow, "trailshikedid")
@@ -218,7 +218,7 @@ jQuery(document).ready(function($) {
         const parkAnchorID = cellText(parkSheetRow,'parkname').replace(/[^\w]/g,'-').toLowerCase()
         const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
         const parkCity   = cellText(parkSheetRow,"primarycity") ? ` - ${cellText(parkSheetRow,'primarycity')}` : ""
-        const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'completionstatus')}"></span>`
+        const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow,'eastbaychallenge')}"></span>`
         const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}`
         const missingHikesFlag = cellIsEmpty(parkSheetRow, "trailshikedid")
         GoToParkOptions.push({id: parkAnchorID, name: parkName})
