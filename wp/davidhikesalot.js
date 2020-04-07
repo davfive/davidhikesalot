@@ -119,6 +119,7 @@ jQuery(document).ready(function($) {
     hikesSheet[0].feed.entry.forEach(function(hikesSheetRow) {
        const parkName = cellText(hikesSheetRow, "parkname")
        const hikeName = cellText(hikesSheetRow, "hikename")
+       const hikeStatus = cellText(hikesSheetRow, "hikestatus")
        if (!parkName || !hikeName) return // Not a hike
 
        initIfUndefined(Hikes, hikeStatus, [])
