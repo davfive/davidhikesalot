@@ -176,7 +176,8 @@ jQuery(document).ready(function($) {
         $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${OverallStats[parkStatus].parks})</span>`)
 
         Parks.filter(row => cellText(row,'completionstatus') === parkStatus).forEach(parkSheetRow => {
-          const parkAnchorID = cellText(parkSheetRow,'parkname').replace(/[^\w]/g,'-').toLowerCase()
+          const parkName = cellText(parkSheetRow, 'parkname')
+          const parkAnchorID = parkName.replace(/[^\w]/g,'-').toLowerCase()
           const parkHasHikes = (parkName in ParkStats && ParkStats[parkName].total.hikes)
           const missingHikesFlag = cellIsEmpty(parkSheetRow, "trailshikedid")
           const missingHikesMarker = (missingHikesFlag) ? ' ...' : ""
