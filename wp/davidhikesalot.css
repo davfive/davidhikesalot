@@ -17,7 +17,7 @@ a:hover { color: black; text-decoration: underline; }
 .page .row .sidebar { display: none; } /* remove/hide sidebar */
 
 /** Global overrides */
-ul { margin-bottom: 10px; }
+ul { margin-top: 0px; margin-bottom: 10px; }
 
 .capitalize { text-transform: capitalize; }
 .small-text {font-size: small !important;}
