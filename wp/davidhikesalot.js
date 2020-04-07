@@ -248,8 +248,11 @@ jQuery(document).ready(function($) {
     }
 
     if (pageHasElement('#sectionParkDetails')) {
-      const parks = Parks.filter(parkRow => ParkStats[cellText(parkRow, 'parkname')].total.hikes > 0).sort(sortByParkName)
-      parks.forEach((parkSheetRow, parkSheetIdx) => {
+      const parks = Parks.filter(parkRow => {
+        const parkName = cellText(parkRow, 'parkname')
+        return (parkName in ParkStatus && ParkStats[parkName].total.hikes > 0)
+      })
+      parks.sort(sortByParkName).forEach((parkSheetRow, parkSheetIdx) => {
         const parkName = cellText(parkSheetRow, 'parkname')
         const parkAnchorID = parkName.replace(/[^\w]/g, '-').toLowerCase()
         const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
