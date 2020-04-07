@@ -250,7 +250,7 @@ jQuery(document).ready(function($) {
     if (pageHasElement('#sectionParkDetails')) {
       const parks = Parks.filter(parkRow => {
         const parkName = cellText(parkRow, 'parkname')
-        return (parkName in ParkStatus && ParkStats[parkName].total.hikes > 0)
+        return (parkName in ParkStats && ParkStats[parkName].total.hikes > 0)
       })
       parks.sort(sortByParkName).forEach((parkSheetRow, parkSheetIdx) => {
         const parkName = cellText(parkSheetRow, 'parkname')
