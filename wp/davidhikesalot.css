@@ -108,6 +108,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   transition: 0.3s;
   border-radius: 5px;
   display: flex;
+  margin-bottom: 25px;
 }
 
 #sectionJournal .journal-card-date {
@@ -127,7 +128,6 @@ time.icon
   width: 7em;
   height: 7em;
   background-color: #fff;
-  margin: 2em auto;
   border-radius: 0.6em;
   box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
   overflow: hidden;
@@ -160,13 +160,13 @@ time.icon .time-header {
 time.icon .time-footer
 {
   position: absolute;
-  bottom: 0.3em;
-  color: #fd9f1b;
+  bottom: 0.5em;
+  color: #71a58a;
 }
 
 time.icon .time-page {
   width: 100%;
-  margin: 0.8em;
+  margin-top: 0.5em;
 }
 time.icon .time-page-row {
   width: 100%;
