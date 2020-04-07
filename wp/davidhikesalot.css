@@ -17,8 +17,7 @@ a:hover { color: black; text-decoration: underline; }
 .page .row .sidebar { display: none; } /* remove/hide sidebar */
 
 /** Global overrides */
-ul { margin: 0; padding: 5px 0; }
-li { margin-bottom: 5px; }
+ul { margin: 5px 0; }
 
 .capitalize { text-transform: capitalize; }
 .small-text {font-size: small !important;}
@@ -32,8 +31,8 @@ li { margin-bottom: 5px; }
 ul.status-list { padding-left: 0px; font-size: small !important; }
 ul.status-list li { display: inline-block; list-style: none; list-style-type: none; }
 
-ul.parks-list  { column-count: 3; margin-left: 5px; padding-left: 20px; font-size: small !important; }
-ul.parks-list li { list-style: none; list-style-type: none; }
+ul.parks-list  { column-count: 3; margin: 0 0 0 5px; padding-left: 20px; font-size: small !important; }
+ul.parks-list li { list-style: none; list-style-type: none; margin-top: 0; margin-bottom: 5px; }
 
 ul.hikes-list  { column-count: 2; margin-left: 5px; padding-left:20px; font-size: small !important; }
 ul.hikes-list li { list-style: none; list-style-type: none; }
