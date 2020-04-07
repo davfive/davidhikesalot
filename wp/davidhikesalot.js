@@ -76,6 +76,11 @@ const parkHikesStr = (park, parkStatus, parkSheetRow) => {
     return ` (${totalHikes} left)`
   }
 }
+const sortByHikeDate = (rowA, rowB) => {
+  const dateA = new Date(cellText(rowA, 'hikedate'))
+  const dateB = new Date(cellText(rowB, 'hikedate'))
+  return (dateA < dateB) ? -1 : (dateA > dateB) ? 1 : 0
+}
 const sortByParkName = (rowA, rowB) => {
   const parkA = cellText(rowA, 'parkname')
   const parkB = cellText(rowB, 'parkname')
@@ -210,6 +215,22 @@ jQuery(document).ready(function($) {
           $(`#${parkStatusDivId} ul.parks-list`).append(parksListLi)
         })
       })
+    }
+
+    if (pageHasElement('#sectionJournal')) {
+      const hikes = []
+      Hikes.completed.filter(hikeRow => !cellIsEmpty(hikeRow, 'hikedate')).sort(sortByHikeDate).reverse()
+          .forEach(hikeRow => {
+            const parkName = cellText(hikeRow, 'parkname') || ''
+            hikes.push(`
+              <li class="bullet-icon ${hikeIcon(hikeRow)}">
+                ${parkName} ${hikeLink(hikeRow)} ${hikeStats(hikeRow)} ${hikePost(hikeRow)}
+              </li>`,
+            )
+          })
+      if (hikes.length) {
+        $(`#sectionJournal ul.hikes-list`).append(hikes.join(''))
+      }
     }
 
     if (pageHasElement('#sectionParkDetails')) {
