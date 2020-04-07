@@ -224,12 +224,12 @@ jQuery(document).ready(function($) {
         const hikeInfo = {
           park: cellText(hikeRow, 'parkname'),
           name: cellText(hikeRow, 'hikename'),
-          date: moment(cellText(hikeRow, 'hikedate'))format('L'), // Local 03/04/2091
+          date: moment(cellText(hikeRow, 'hikedate')),
         }
         let entry = `
           <div class="page-subsection journal-card">
             <div class="journal-card-date">
-              <time datetime="${hikeInfo.date}" class="icon">
+              <time datetime="${hikeInfo.date.format('L')}" class="icon">
                 <em>${hikeInfo.date.format('dddd')}</em>
                 <strong>${hikeInfo.date.format('mmm')}</strong>
                 <span>${hikeInfo.date.format('dd')}</span>
