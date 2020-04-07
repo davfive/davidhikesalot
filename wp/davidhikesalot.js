@@ -78,7 +78,7 @@ const parkHikesStr = (park, parkStatus, parkSheetRow) => {
 const sortByParkName = (rowA, rowB) => {
   const parkA = cellText(rowA, 'parkname')
   const parkB = cellText(rowB, 'parkname')
-  (parkA < parkB) ? -1 : (parkA > parkB) ? 1 : 0
+  return (parkA < parkB) ? -1 : (parkA > parkB) ? 1 : 0
 }
 const updateOverallStats = (hikeStatus, distance, elevation) => {
   const statType = (hikeStatus === "completed") ? "completed" : "planned"
