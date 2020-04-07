@@ -44,7 +44,6 @@ const parkGetProgress = parkRow => {
     case 'not-started': return 'notstarted'
     default: return 'inprogress'
   }
-  return parkStatus === 'completed'['completed', 'not-started'].includes(parkStatus) ? parkStatus : 'in-progress'
 }
 const hikeLink = (row) => cellText(row, "mapurl") ? `<a target="_blank" href="${cellText(row, "mapurl")}">${cellText(row, "hikename")}</a>` : ""
 const hikePost = (row) => cellText(row, "blogposturl") ? `<a target="_blank" href="${cellText(row, "blogposturl")}"><i class="far fa-images"></i></a>` : ""
