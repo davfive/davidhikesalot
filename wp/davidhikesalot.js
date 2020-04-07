@@ -214,7 +214,8 @@ jQuery(document).ready(function($) {
 
     if (pageHasElement('#sectionParkDetails')) {
       Parks.sort(sortByParkName).forEach((parkSheetRow, parkSheetIdx) => {
-        const parkAnchorID = cellText(parkSheetRow, 'parkname').replace(/[^\w]/g, '-').toLowerCase()
+        const parkName = cellText(parkSheetRow, 'parkname')
+        const parkAnchorID = parkName.replace(/[^\w]/g, '-').toLowerCase()
         const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
         const parkCity = cellText(parkSheetRow, 'primarycity') ? ` - ${cellText(parkSheetRow, 'primarycity')}` : ''
         const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow, 'eastbaychallenge')}"></span>`
