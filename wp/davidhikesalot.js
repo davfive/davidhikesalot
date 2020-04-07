@@ -212,7 +212,7 @@ jQuery(document).ready(function($) {
       })
     }
 
-    if (pageHasElement('sectionParkDetails')) {
+    if (pageHasElement('#sectionParkDetails')) {
       Parks.sort(sortByParkName).forEach((parkSheetRow, parkSheetIdx) => {
         const parkAnchorID = cellText(parkSheetRow, 'parkname').replace(/[^\w]/g, '-').toLowerCase()
         const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
