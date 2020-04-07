@@ -6,7 +6,7 @@ const OverallStats = {
   inprogress: { parks: 0 },
   notstarted: { parks: 0 }
 }
-const Parks = {} // Parks[parkName] = parkSheetRow
+const Parks =[] // Parks[parkName] = parkSheetRow
 const ParkStats = {}
 const GoToParkOptions = []
 const HikeStatuses = ["nexthike", "planned", "completed"]
