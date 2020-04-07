@@ -103,6 +103,22 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   outline: none;
 }
 
+#sectionJournal .journal-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  display: flex;
+}
+
+#sectionJournal .journal-card-date {
+  border-radius: 5px;
+  line-height: 0;
+}
+
+#sectionJournal .journal-card-content {
+  padding: 0 10px;
+}
+
 time.icon
 {
   font-size: 1em; /* change icon size */
