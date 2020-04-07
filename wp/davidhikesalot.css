@@ -13,8 +13,8 @@ a:hover { color: black; text-decoration: underline; }
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, .8);
 }
-.page .row .eleven { width: unset; }
-.page .row .sidebar { display: none; }
+.page .row .eleven { width: 100%; } /* main page content to full width */
+.page .row .sidebar { display: none; } /* remove/hide sidebar */
 
 /** Global overrides */
 ul { margin-bottom: 10px; }
