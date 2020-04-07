@@ -170,7 +170,7 @@ jQuery(document).ready(function($) {
     }
     
     if (pageHasElement('#sectionChallenge')) {
-      const parkStatusLists = {parksCompleted: 'completed', parksInProgress: 'inprogress', parksNotStarted: 'notstarted'}
+      const parkStatusLists = {parksCompleted: 'completed', parksInProgress: 'in-progress', parksNotStarted: 'not-started'}
       Object.keys(parkStatusLists).forEach(parkStatusDivId => {
         const parkStatus = parkStatusLists[parkStatusDivId]
         $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${OverallStats[parkStatus].parks})</span>`)
