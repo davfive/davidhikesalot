@@ -193,7 +193,7 @@ jQuery(document).ready(function($) {
 
         Parks.filter(row => parkInChallenge(row) && parkGetProgress(row) === thisProgress).forEach(parkSheetRow => {
           const parkName = cellText(parkSheetRow, 'parkname')
-          const parkStatus = cellTest(parkSheetRow, 'parkstatus')
+          const parkStatus = cellText(parkSheetRow, 'parkstatus')
           const parkAnchorID = parkName.replace(/[^\w]/g,'-').toLowerCase()
           const parkHasHikes = (parkName in ParkStats && ParkStats[parkName].total.hikes)
           const missingHikesFlag = cellIsEmpty(parkSheetRow, "trailshikedid")
