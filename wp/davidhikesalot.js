@@ -28,6 +28,7 @@ const getHikeListByStatus = (hikeStatus, parkName) => {
   }
 
   return filteredHikes(hikeStatus, parkName).reduce((hikes, hikeRow) => {
+    const parkName = cellText(hikeRow, 'parkname') || ''
     hikes.push(`
       <li class="bullet-icon ${hikeIcon(hikeRow)}">
          ${parkName} ${hikeLink(hikeRow)} ${hikeStats(hikeRow)} ${hikePost(hikeRow)}
