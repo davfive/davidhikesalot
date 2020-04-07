@@ -172,7 +172,7 @@ jQuery(document).ready(function($) {
         if (pageHasElement(`#sectionHikes #${hikeStatus}`) && (hikeStatus in Hikes)) {
           const hikes = getHikeListByStatus(hikeStatus)
           if (hikes.length) {
-            $(`#sectionHikes #${hikeStatus} ul.hikes-list`).append(hikes[hikeStatus].join(''))
+            $(`#sectionHikes #${hikeStatus} ul.hikes-list`).append(hikes.join(''))
           }
         }
       })
