@@ -147,7 +147,7 @@ time.icon *
   text-align: center;
 }
 
-time.icon .header {
+time.icon .time-header {
   position: absolute;
   top: 0;
   padding: 0.70em 0;
@@ -157,14 +157,18 @@ time.icon .header {
   box-shadow: 0 2px 0 #b1d1b4;
 }
 
-time.icon .footer
+time.icon .time-footer
 {
   position: absolute;
   bottom: 0.3em;
   color: #fd9f1b;
 }
 
-time.icon .page {
+time.icon .time-page {
+  width: 100%;
+  margin: 0.8em;
+}
+time.icon .time-page-row {
   width: 100%;
   font-size: 1.8em;
   letter-spacing: -0.05em;
