@@ -170,9 +170,9 @@ jQuery(document).ready(function($) {
     }
     
     if (pageHasElement('#sectionChallenge')) {
-      const id2status = {parksCompleted: 'completed', parksInProgress: 'inprogress', parksNotStarted: 'notstarted'}
-      ['parksCompleted', 'parksInProgress', 'parksNotStarted'].forEach(parkStatusDivId => {
-        const parkStatus = id2status(parkStatusDivId)
+      const parkStatusLists = {parksCompleted: 'completed', parksInProgress: 'inprogress', parksNotStarted: 'notstarted'}
+      Object.keys(parkStatusLists).forEach.forEach(parkStatusDivId => {
+        const parkStatus = parkStatusLists[parkStatusDivId]
         $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${OverallStats[parkStatus].parks})</span>`)
 
         Parks.filter(row => cellText(row,'completionstatus') === parkStatus).forEach(parkSheetRow => {
