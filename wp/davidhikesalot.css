@@ -147,30 +147,28 @@ time.icon *
   text-align: center;
 }
 
-time.icon strong
-{
+time.icon .header {
   position: absolute;
   top: 0;
-  padding: 0.4em 0;
+  padding: 0.70em 0;
   color: #fff;
-  background-color: #fd9f1b;
-  border-bottom: 1px dashed #f37302;
-  box-shadow: 0 2px 0 #fd9f1b;
+  background-color: #b1d1b4;
+  border-bottom: 1px dashed #7fb79a;
+  box-shadow: 0 2px 0 #b1d1b4;
 }
 
-time.icon em
+time.icon .footer
 {
   position: absolute;
   bottom: 0.3em;
   color: #fd9f1b;
 }
 
-time.icon span
-{
+time.icon .date {
   width: 100%;
-  font-size: 2.8em;
+  font-size: 1.8em;
   letter-spacing: -0.05em;
-  padding-top: 0.8em;
+  padding-top: 1.2em;
   color: #2f2f2f;
 }
 

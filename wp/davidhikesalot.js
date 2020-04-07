@@ -230,9 +230,10 @@ jQuery(document).ready(function($) {
           <div class="page-subsection journal-card">
             <div class="journal-card-date">
               <time datetime="${hikeInfo.date.format('L')}" class="icon">
-                <em>${hikeInfo.date.format('dddd')}</em>
-                <strong>${hikeInfo.date.format('mmm')}</strong>
-                <span>${hikeInfo.date.format('dd')}</span>
+                <span class='header'>${hikeInfo.date.format('YYYY')}</span>
+                <span class='page'>${hikeInfo.date.format('MMM')}</span>
+                <span class='page'>${hikeInfo.date.format('DD')}</span>
+                <span class='footer'>${hikeInfo.date.format('dddd')}</span>
               </time>
             </div>
             <div class="journal-card-content">
