@@ -169,7 +169,7 @@ jQuery(document).ready(function($) {
     }
 
     if (pageHasElement('#sectionHikes')) {
-      ['completed', 'planned', 'nexthikes'].forEach(hikeStatus => {
+      ['completed', 'planned', 'nexthike'].forEach(hikeStatus => {
         if (pageHasElement(`#sectionHikes #${hikeStatus}`) && (hikeStatus in Hikes)) {
           const hikes = getHikeListByStatus(hikeStatus)
           if (hikes.length) {
