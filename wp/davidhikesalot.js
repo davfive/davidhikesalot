@@ -35,9 +35,16 @@ const getHikeListByStatus = (hikeStatus, parkName) => {
     return hikes
   }, [])
 }
-const getParkProgress = parkRow => {
+const parkInChallenge = parkRow => cellText(parkRow,'completionstatus') !== ''
+const challengeStatusToGroup = parkRow => {
   const parkStatus = cellText(parkRow,'completionstatus')
-  return ['completed', 'not-started'].includes(parkStatus) ? parkStatus : 'in-progress'
+  if (!parkStatus) return 
+  switch (parkStatus) {
+    case 'completed': return 'completed'
+    case 'not-started': return 'notstarted'
+    default: return 'inprogress'
+  }
+  return parkStatus === 'completed'['completed', 'not-started'].includes(parkStatus) ? parkStatus : 'in-progress'
 }
 const hikeLink = (row) => cellText(row, "mapurl") ? `<a target="_blank" href="${cellText(row, "mapurl")}">${cellText(row, "hikename")}</a>` : ""
 const hikePost = (row) => cellText(row, "blogposturl") ? `<a target="_blank" href="${cellText(row, "blogposturl")}"><i class="far fa-images"></i></a>` : ""
@@ -174,12 +181,17 @@ jQuery(document).ready(function($) {
     }
     
     if (pageHasElement('#sectionChallenge')) {
-      const parkStatusLists = {parksCompleted: 'completed', parksInProgress: 'in-progress', parksNotStarted: 'not-started'}
-      Object.keys(parkStatusLists).forEach(parkStatusDivId => {
-        const thisProgress = parkStatusLists[parkStatusDivId]
+      const challengeParksGroups = {
+        // listDivId: progress-group
+        parksCompleted: 'completed',
+        parksInProgress: 'inprogress', 
+        parksNotStarted: 'notstarted'
+      }
+      Object.keys(challengeParksGroups).forEach(parkStatusDivId => {
+        const thisProgress = challengeParksGroups[parkStatusDivId]
         $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${OverallStats[thisProgress].parks})</span>`)
 
-        Parks.filter(row => getParkProgress(row) === thisProgress).forEach(parkSheetRow => {
+        Parks.filter(row => parkInChallenge(row) && getParkProgress(row) === thisProgress).forEach(parkSheetRow => {
           const parkName = cellText(parkSheetRow, 'parkname')
           const parkAnchorID = parkName.replace(/[^\w]/g,'-').toLowerCase()
           const parkHasHikes = (parkName in ParkStats && ParkStats[parkName].total.hikes)
