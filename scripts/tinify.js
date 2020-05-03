@@ -6,8 +6,10 @@ const parser = new ArgumentParser({ version: '0.0.1', addHelp:true, description:
 parser.addArgument('apikey', { help: 'tinypng.com API key from https://tinypng.com/dashboard/api'})
 parser.addArgument('infile', { help: 'Path to png to be tinified'})
 const args = parser.parseArgs()
-args.outwfile = `${path.dirname(args.infile)}${path.sep}${path.basename(args.infile, '.png')}.w.png`
-args.outmfile = `${path.dirname(args.infile)}${path.sep}${path.basename(args.infile, '.png')}.m.png`
+const extname = path.extname(args.infile)
+const basename = path.basename(args.infile, extname)
+args.outwfile = `${path.dirname(args.infile)}${path.sep}${basename}.w${extname}`
+args.outmfile = `${path.dirname(args.infile)}${path.sep}${basename}.m${extname}`
 console.dir(args)
 
 tinify.key = args.apikey
