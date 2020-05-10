@@ -230,17 +230,17 @@ jQuery(document).ready(function($) {
           <div class="page-subsection hike-card">
             <div class="hike-card-date">
               <time datetime="${hikeInfo.date.format('L')}" class="icon">
-                <span class='time-header'>${hikeInfo.date.format('YYYY')}</span>
+                <div class='time-header'>${hikeInfo.date.format('MMM')} ${hikeInfo.date.format('YYYY')}</div>
                 <div class='time-page'>
-                  <span class='time-page-row'>${hikeInfo.date.format('MMM')}</span>
-                  <span class='time-page-row'>${hikeInfo.date.format('DD')}</span>
+                  <div class='time-page-row'>${hikeInfo.date.format('DD')}</div>
                 </div>
-                <span class='time-footer'>${hikeInfo.date.format('dddd')}</span>
+                <div class='time-footer'>${hikeInfo.date.format('dddd')}</div>
               </time>
             </div>
             <div class="hike-card-content">
-              <h5>${hikeInfo.park}</h5>
-              <p>${hikeLink(hikeRow)} ${hikeStats(hikeRow)} ${hikePost(hikeRow)}</p>
+              <p>${hikeLink(hikeRow)}</p>
+              <p>${hikeInfo.park}, ${hikeInfo.city}</p>
+              <p>${hikeStats(hikeRow)}, ${hikePost(hikeRow)}</p>
             </div>
           </div>`
         entries.push(entry)
