@@ -234,7 +234,10 @@ jQuery(document).ready(function($) {
 
     if (pageHasElement('#sectionHikesByDate')) {
       const entries = []
-      const hikes = Hikes.completed.filter(hikeRow => !cellIsEmpty(hikeRow, 'hikedate')).sort(sortByHikeDate).reverse()
+      const hikes = Hikes.completed.filter(hikeRow => {
+        return !cellIsEmpty(hikeRow, 'hikedate') &&
+          moment(cellText(hikeRow, 'hikedate')).isValid()
+      }).sort(sortByHikeDate).reverse()
       hikes.forEach(hikeRow => {
         const hikeInfo = {
           park: cellText(hikeRow, 'parkname'),
