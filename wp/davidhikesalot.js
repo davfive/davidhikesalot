@@ -245,7 +245,12 @@ jQuery(document).ready(function($) {
           name: cellText(hikeRow, 'hikename'),
           date: moment(cellText(hikeRow, 'hikedate')),
         }
-        const entry = `
+        const blogurl = cellText(hikeRow, 'blogposturl')
+        let entry
+        if (blogurl) {
+          entry = `<a href="${blogurl}">`
+        }
+        entry = `
           <div class="page-subsection hike-card">
             <div class="hike-card-date">
               <time datetime="${hikeData.date.format('L')}" class="icon">
@@ -261,7 +266,11 @@ jQuery(document).ready(function($) {
               ${hikeInfo(hikeRow)}
               </p>
             </div>
-          </div>`
+          </div>
+          `
+        if (blogurl) {
+          entry = `</a>`
+        }
         entries.push(entry)
       })
       if (entries.length) {
