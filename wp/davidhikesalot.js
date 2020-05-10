@@ -243,8 +243,10 @@ jQuery(document).ready(function($) {
         const hikeDate = moment(cellText(hikeRow, 'hikedate'))
         const blogurl = cellText(hikeRow, 'blogposturl')
         let entry = ''
+        let blogicon = ''
         if (blogurl) {
           entry = `<a class="hike-card-link" href="${blogurl}">`
+          blogicon = `<i class="far fa-images"></i>`
         }
         entry += `
           <div class="page-subsection hike-card">
@@ -256,7 +258,7 @@ jQuery(document).ready(function($) {
               </time>
             </div>
             <div class="hike-card-content">
-              <h6>${cellText(hikeRow, 'hikename')}</h6>
+              <h6>${cellText(hikeRow, 'hikename')} ${blogicon}</h6>
               <p>
               ${hikePark(hikeRow)}<br/>
               ${hikeInfo(hikeRow)}
