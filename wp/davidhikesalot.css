@@ -152,13 +152,13 @@ time.icon .time-header {
 time.icon .time-daynum {
   width: 100%;
   font-size: 1.8em;
-  letter-spacing: -0.05em;
   color: #7fb79a;
 }
 
 time.icon .time-dayname
 {
   color: #71a58a;
+  margin-top: -0.65em;
 }
 
 .page-tips { margin-bottom: 5px;}

@@ -255,10 +255,10 @@ jQuery(document).ready(function($) {
               </time>
             </div>
             <div class="hike-card-content">
+              <h6>${hikeLink(hikeRow)}</h6>
               <p>
-              ${hikeLink(hikeRow)}<br/>
               ${hikePark(hikeRow)}<br/>
-              ${hikeInfo(hikeRow)} ${hikePost(hikeRow)}
+              ${hikeInfo(hikeRow)}
               </p>
             </div>
           </div>`
