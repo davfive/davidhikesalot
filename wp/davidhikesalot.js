@@ -250,17 +250,15 @@ jQuery(document).ready(function($) {
             <div class="hike-card-date">
               <time datetime="${hikeData.date.format('L')}" class="icon">
                 <div class='time-header'>${hikeData.date.format('MMM')} ${hikeData.date.format('YYYY')}</div>
-                <div class='time-page'>
-                  <div class='time-page-row'>${hikeData.date.format('DD')}</div>
-                </div>
-                <div class='time-footer'>${hikeData.date.format('dddd')}</div>
+                <div class='time-daynum'>${hikeData.date.format('DD')}</div>
+                <div class='time-dayname'>${hikeData.date.format('dddd')}</div>
               </time>
             </div>
             <div class="hike-card-content">
               <p>
               ${hikeLink(hikeRow)}<br/>
               ${hikePark(hikeRow)}<br/>
-              ${hikeInfo(hikeRow)}, ${hikePost(hikeRow)}
+              ${hikeInfo(hikeRow)} ${hikePost(hikeRow)}
               </p>
             </div>
           </div>`
