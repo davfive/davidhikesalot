@@ -242,7 +242,7 @@ jQuery(document).ready(function($) {
       hikes.forEach(hikeRow => {
         const hikeDate = moment(cellText(hikeRow, 'hikedate'))
         const blogurl = cellText(hikeRow, 'blogposturl')
-        let entry
+        let entry = ''
         if (blogurl) {
           entry = `<a class="hike-card-link" href="${blogurl}">`
         }
