@@ -116,6 +116,11 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   margin-bottom: 25px;
 }
 
+#sectionHikesByDate .hike-card:active {
+  box-shadow: 0 7px 11px 0 rgba(0,0,0,0.2);
+  top: 3px;
+}
+
 #sectionHikesByDate .hike-card-date {
   border-radius: 5px 0 0 5px;
   background-color: #b1d1b4;
