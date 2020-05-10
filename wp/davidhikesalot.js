@@ -58,7 +58,8 @@ const hikeInfo = row => {
 const hikeLink = row => cellText(row, 'mapurl') ? `<a target="_blank" href="${cellText(row, 'mapurl')}">${cellText(row, 'hikename')}</a>` : ''
 const hikePark = row => {
   const parkName = cellText(row, 'parkname')
-  const parkRow = Parks[parkName]
+  const parkRow = Parks.find(e => cellText(e, 'parkname') === parkName)
+  if (!parkRow) return ''
   const parkInfo = [cellText(parkRow, 'fullname') || parkName]
   if (cellText(parkRow, 'city')) parkInfo.push(cellText(parkRow, 'city'))
   if (cellText(parkRow, 'region')) parkInfo.push(cellText(parkRow, 'region'))
@@ -239,7 +240,7 @@ jQuery(document).ready(function($) {
           moment(cellText(hikeRow, 'hikedate')).isValid()
       }).sort(sortByHikeDate).reverse()
       hikes.forEach(hikeRow => {
-        const hikeInfo = {
+        const hikeData = {
           park: cellText(hikeRow, 'parkname'),
           name: cellText(hikeRow, 'hikename'),
           date: moment(cellText(hikeRow, 'hikedate')),
@@ -247,12 +248,12 @@ jQuery(document).ready(function($) {
         const entry = `
           <div class="page-subsection hike-card">
             <div class="hike-card-date">
-              <time datetime="${hikeInfo.date.format('L')}" class="icon">
-                <div class='time-header'>${hikeInfo.date.format('MMM')} ${hikeInfo.date.format('YYYY')}</div>
+              <time datetime="${hikeData.date.format('L')}" class="icon">
+                <div class='time-header'>${hikeData.date.format('MMM')} ${hikeData.date.format('YYYY')}</div>
                 <div class='time-page'>
-                  <div class='time-page-row'>${hikeInfo.date.format('DD')}</div>
+                  <div class='time-page-row'>${hikeData.date.format('DD')}</div>
                 </div>
-                <div class='time-footer'>${hikeInfo.date.format('dddd')}</div>
+                <div class='time-footer'>${hikeData.date.format('dddd')}</div>
               </time>
             </div>
             <div class="hike-card-content">
