@@ -104,7 +104,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   outline: none;
 }
 
-#sectionJournal .journal-card {
+#sectionHikesByDate .hike-card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   border-radius: 5px;
@@ -112,12 +112,12 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   margin-bottom: 25px;
 }
 
-#sectionJournal .journal-card-date {
+#sectionHikesByDate .hike-card-date {
   border-radius: 5px;
   line-height: 0;
 }
 
-#sectionJournal .journal-card-content {
+#sectionHikesByDate .hike-card-content {
   padding: 0 10px;
 }
 
@@ -127,15 +127,9 @@ time.icon
   display: block;
   position: relative;
   width: 7em;
-  height: 7em;
   background-color: #fff;
   border-radius: 0.6em;
-  box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
   overflow: hidden;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: rotate(0deg) skewY(0deg);
-  -webkit-transform-origin: 50% 10%;
-  transform-origin: 50% 10%;
 }
 
 time.icon *
@@ -149,32 +143,17 @@ time.icon *
 }
 
 time.icon .time-header {
-  position: absolute;
-  top: 0;
-  padding: 0.70em 0;
+  padding: 0.3em 0;
   color: #fff;
   background-color: #b1d1b4;
   border-bottom: 1px dashed #7fb79a;
-  box-shadow: 0 2px 0 #b1d1b4;
+  box-shadow: 0 2px 0 #7fb79a;
 }
 
 time.icon .time-footer
 {
-  position: absolute;
-  bottom: 0.5em;
   color: #71a58a;
-}
-
-time.icon .time-page {
-  width: 100%;
-  margin-top: 0.5em;
-}
-time.icon .time-page-row {
-  width: 100%;
-  font-size: 1.8em;
-  letter-spacing: -0.05em;
-  padding-top: 1.2em;
-  color: #2f2f2f;
+  padding-bottom: 0.3em;
 }
 
 .page-tips { margin-bottom: 5px;}

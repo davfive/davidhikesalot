@@ -246,7 +246,7 @@ jQuery(document).ready(function($) {
         entries.push(entry)
       })
       if (entries.length) {
-        $('#sectionHikesByDateCards').append(entries.join(''))
+        $('#sectionHikesByDate').append(entries.join(''))
       }
     }
 
