@@ -217,7 +217,7 @@ jQuery(document).ready(function($) {
       })
     }
 
-    if (pageHasElement('#sectionJournal')) {
+    if (pageHasElement('#sectionHikesByDate')) {
       const entries = []
       const hikes = Hikes.completed.filter(hikeRow => !cellIsEmpty(hikeRow, 'hikedate')).sort(sortByHikeDate).reverse()
       hikes.forEach(hikeRow => {
@@ -227,8 +227,8 @@ jQuery(document).ready(function($) {
           date: moment(cellText(hikeRow, 'hikedate')),
         }
         const entry = `
-          <div class="page-subsection journal-card">
-            <div class="journal-card-date">
+          <div class="page-subsection hike-card">
+            <div class="hike-card-date">
               <time datetime="${hikeInfo.date.format('L')}" class="icon">
                 <span class='time-header'>${hikeInfo.date.format('YYYY')}</span>
                 <div class='time-page'>
@@ -238,7 +238,7 @@ jQuery(document).ready(function($) {
                 <span class='time-footer'>${hikeInfo.date.format('dddd')}</span>
               </time>
             </div>
-            <div class="journal-card-content">
+            <div class="hike-card-content">
               <h5>${hikeInfo.park}</h5>
               <p>${hikeLink(hikeRow)} ${hikeStats(hikeRow)} ${hikePost(hikeRow)}</p>
             </div>
@@ -246,7 +246,7 @@ jQuery(document).ready(function($) {
         entries.push(entry)
       })
       if (entries.length) {
-        $('#sectionJournal').append(entries.join(''))
+        $('#sectionHikesByDateCards').append(entries.join(''))
       }
     }
 
