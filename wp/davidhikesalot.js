@@ -238,9 +238,11 @@ jQuery(document).ready(function($) {
               </time>
             </div>
             <div class="hike-card-content">
-              <p>${hikeLink(hikeRow)}</p>
-              <p>${hikeInfo.park}, ${hikeInfo.city}</p>
-              <p>${hikeStats(hikeRow)}, ${hikePost(hikeRow)}</p>
+              <p>
+              ${hikeLink(hikeRow)}<br/>
+              ${hikeInfo.park}, ${hikeInfo.city}<br/>
+              ${hikeStats(hikeRow)}, ${hikePost(hikeRow)}
+              </p>
             </div>
           </div>`
         entries.push(entry)
