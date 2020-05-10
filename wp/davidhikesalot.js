@@ -47,15 +47,30 @@ const parkGetProgress = parkRow => {
     default: return 'inprogress'
   }
 }
-const hikeLink = row => cellText(row, 'mapurl') ? `<a target="_blank" href="${cellText(row, 'mapurl')}">${cellText(row, 'hikename')}</a>` : ''
-const hikePost = row => cellText(row, 'blogposturl') ? `<a target="_blank" href="${cellText(row, 'blogposturl')}"><i class="far fa-images"></i></a>` : ''
 const hikeIcon = row => cellText(row, 'favorite') ? 'favorite' : 'normal'
-const hikeStats = row => {
+const hikeInfo = row => {
+  const parts = []
+  const stats = hikeStats(row, false)
+  if (stats) parts.push(stats)
+  if (cellText(row, 'teaser')) parts.push(cellText(row, 'teaser'))
+  return parts.join(', ')
+}
+const hikeLink = row => cellText(row, 'mapurl') ? `<a target="_blank" href="${cellText(row, 'mapurl')}">${cellText(row, 'hikename')}</a>` : ''
+const hikePark = row => {
+  const parkName = cellText(row, 'parkname')
+  const parkRow = Parks[parkName]
+  const parkInfo = [cellText(parkRow, 'fullname') || parkName]
+  if (cellText(parkRow, 'city')) parkInfo.push(cellText(parkRow, 'city'))
+  if (cellText(parkRow, 'region')) parkInfo.push(cellText(parkRow, 'region'))
+  return parkInfo.join(', ')
+}
+const hikePost = row => cellText(row, 'blogposturl') ? `<a target="_blank" href="${cellText(row, 'blogposturl')}"><i class="far fa-images"></i></a>` : ''
+const hikeStats = (row, wrap=true) => {
   if (cellText(row, 'distance') || cellText('elevation')) {
     const hikeStats = []
     hikeStats.push(cellText(row, 'distance') ? `${cellText(row, 'distance')}mi` : '')
     hikeStats.push(cellText(row, 'elevation') ? `${cellText(row, 'elevation')}ft gain` : '')
-    return `(${hikeStats.join(', ')})`
+    return wrap ? `(${hikeStats.join(', ')})` : `${hikeStats.join(', ')}`
   } else {
     return ''
   }
@@ -240,8 +255,8 @@ jQuery(document).ready(function($) {
             <div class="hike-card-content">
               <p>
               ${hikeLink(hikeRow)}<br/>
-              ${hikeInfo.park}, ${hikeInfo.city}<br/>
-              ${hikeStats(hikeRow)}, ${hikePost(hikeRow)}
+              ${hikePark(hikeRow)}<br/>
+              ${hikeInfo(hikeRow)}, ${hikePost(hikeRow)}
               </p>
             </div>
           </div>`
