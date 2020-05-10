@@ -119,6 +119,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 
 #sectionHikesByDate .hike-card-content {
   padding: 0 10px;
+  width: 100%;
 }
 
 time.icon
@@ -144,15 +145,15 @@ time.icon *
 time.icon .time-header {
   padding: 0;
   color: #fff;
-  background-color: #7fb79a;
+  background-color: #71a58a;
   border-bottom: 1px dashed #b1d1b4;
-  box-shadow: 0 2px 0 #7fb79a;
+  box-shadow: 0 2px 0 #71a58a;
 }
 
 time.icon .time-daynum {
   width: 100%;
   font-size: 1.8em;
-  color: #7fb79a;
+  color: #71a58a;
 }
 
 time.icon .time-dayname
