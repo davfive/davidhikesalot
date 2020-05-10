@@ -144,26 +144,21 @@ time.icon *
 time.icon .time-header {
   padding: 0;
   color: #fff;
-  background-color: #b1d1b4;
-  border-bottom: 1px dashed #7fb79a;
+  background-color: #7fb79a;
+  border-bottom: 1px dashed #b1d1b4;
   box-shadow: 0 2px 0 #7fb79a;
 }
 
-time.icon .time-footer
-{
-  color: #71a58a;
-}
-
-time.icon .time-page {
-  width: 100%;
-  margin-top: 0.5em;
-}
-time.icon .time-page-row {
+time.icon .time-daynum {
   width: 100%;
   font-size: 1.8em;
   letter-spacing: -0.05em;
-  padding-top: 1.2em;
-  color: #2f2f2f;
+  color: #7fb79a;
+}
+
+time.icon .time-dayname
+{
+  color: #71a58a;
 }
 
 .page-tips { margin-bottom: 5px;}
