@@ -240,27 +240,23 @@ jQuery(document).ready(function($) {
           moment(cellText(hikeRow, 'hikedate')).isValid()
       }).sort(sortByHikeDate).reverse()
       hikes.forEach(hikeRow => {
-        const hikeData = {
-          park: cellText(hikeRow, 'parkname'),
-          name: cellText(hikeRow, 'hikename'),
-          date: moment(cellText(hikeRow, 'hikedate')),
-        }
+        const hikeDate = moment(cellText(hikeRow, 'hikedate'))
         const blogurl = cellText(hikeRow, 'blogposturl')
         let entry
         if (blogurl) {
           entry = `<a href="${blogurl}">`
         }
-        entry = `
+        entry += `
           <div class="page-subsection hike-card">
             <div class="hike-card-date">
-              <time datetime="${hikeData.date.format('L')}" class="icon">
-                <div class='time-header'>${hikeData.date.format('MMM')} ${hikeData.date.format('YYYY')}</div>
-                <div class='time-daynum'>${hikeData.date.format('DD')}</div>
-                <div class='time-dayname'>${hikeData.date.format('dddd')}</div>
+              <time datetime="${hikeDate.format('L')}" class="icon">
+                <div class='time-header'>${hikeDate.format('MMM')} ${hikeDate.format('YYYY')}</div>
+                <div class='time-daynum'>${hikeDate.format('DD')}</div>
+                <div class='time-dayname'>${hikeDate.format('dddd')}</div>
               </time>
             </div>
             <div class="hike-card-content">
-              <h6>${hikeLink(hikeRow)}</h6>
+              <h6>${cellText(hikeRow, 'hikename')}</h6>
               <p>
               ${hikePark(hikeRow)}<br/>
               ${hikeInfo(hikeRow)}
@@ -269,7 +265,7 @@ jQuery(document).ready(function($) {
           </div>
           `
         if (blogurl) {
-          entry = `</a>`
+          entry += `</a>`
         }
         entries.push(entry)
       })
