@@ -104,6 +104,10 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   outline: none;
 }
 
+.hike-card-link, .hike-card-link:visited,.hike-card-link:hover,.hike-card-link:active {
+  text-decoration:none;
+}
+
 #sectionHikesByDate .hike-card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;

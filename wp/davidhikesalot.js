@@ -244,7 +244,7 @@ jQuery(document).ready(function($) {
         const blogurl = cellText(hikeRow, 'blogposturl')
         let entry
         if (blogurl) {
-          entry = `<a href="${blogurl}">`
+          entry = `<a class="hike-card-link" href="${blogurl}">`
         }
         entry += `
           <div class="page-subsection hike-card">
