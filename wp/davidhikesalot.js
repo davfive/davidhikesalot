@@ -66,7 +66,7 @@ const hikePark = row => {
   if (cellText(parkRow, 'region')) parkInfo.push(cellText(parkRow, 'region'))
   return parkInfo.join(', ')
 }
-const hikeDogsIcon = row => cellIsYes(row, 'dogs') ? '<i class="far fa-dog"></i>' : ''
+const hikeDogsIcon = row => cellIsYes(row, 'dogs') ? '<i class="fas fa-dog"></i>' : ''
 const hikePost = row => cellText(row, 'blogposturl') ? `<a target="_blank" href="${cellText(row, 'blogposturl')}"><i class="far fa-images"></i></a>` : ''
 const hikeStats = (row, wrap=true) => {
   if (cellText(row, 'distance') || cellText(row, 'elevation')) {
