@@ -130,7 +130,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   background-color: #f1f1f1;
 }
 
-#sectionHikesByDate .hike-card .hike-recommended {
+#sectionHikesByDate .hike-card.hike-recommended {
   border: 3px goldenrod solid;
   border-radius: 8px;
 }
