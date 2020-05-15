@@ -17,7 +17,7 @@ const HikesSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnE
 
 /* Utility Functions */
 const cellText = (row, id) => {
-  return (`gsx$${id}` in row) ? row[`gsx$${id}`]['$t'] : ''
+  return (id && `gsx$${id}` in row) ? row[`gsx$${id}`]['$t'] : ''
 }
 const cellIsEmpty = (row, id) => (['', '--'].indexOf(cellText(row, id)) >= 0)
 const getHikeListByStatus = (hikeStatus, parkName) => {
