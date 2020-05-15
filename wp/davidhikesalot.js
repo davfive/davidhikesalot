@@ -67,7 +67,7 @@ const hikePark = row => {
 }
 const hikePost = row => cellText(row, 'blogposturl') ? `<a target="_blank" href="${cellText(row, 'blogposturl')}"><i class="far fa-images"></i></a>` : ''
 const hikeStats = (row, wrap=true) => {
-  if (cellText(row, 'distance') || cellText('elevation')) {
+  if (cellText(row, 'distance') || cellText(row, 'elevation')) {
     const hikeStats = []
     hikeStats.push(cellText(row, 'distance') ? `${cellText(row, 'distance')}mi` : '')
     hikeStats.push(cellText(row, 'elevation') ? `${cellText(row, 'elevation')}ft gain` : '')
