@@ -126,8 +126,13 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   width: 100%;
 }
 
-.hike-card-link #sectionHikesByDate .hike-card-content:hover {
+#sectionHikesByDate .hike-card-link .hike-card-content:hover {
   background-color: #f1f1f1;
+}
+
+#sectionHikesByDate .hike-card .hike-recommended {
+  border: 3px goldenrod solid;
+  border-radius: 8px;
 }
 
 time.icon

@@ -16,6 +16,7 @@ const ParksSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnE
 const HikesSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/o6rptkw/public/values?alt=json'
 
 /* Utility Functions */
+const cellIsYes = (row, id) => (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] === 'yes' : false
 const cellText = (row, id) => {
   return (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] : ''
 }
@@ -30,7 +31,7 @@ const getHikeListByStatus = (hikeStatus, parkName) => {
   return filteredHikes(hikeStatus, parkName).reduce((hikes, hikeRow) => {
     const parkName = cellText(hikeRow, 'parkname') || ''
     hikes.push(`
-      <li class="bullet-icon ${hikeIcon(hikeRow)}">
+      <li class="bullet-icon ${hikeRecomend(hikeRow)}">
          ${parkName} ${hikeLink(hikeRow)} ${hikeStats(hikeRow)} ${hikePost(hikeRow)}
       </li>`,
     )
@@ -47,7 +48,7 @@ const parkGetProgress = parkRow => {
     default: return 'inprogress'
   }
 }
-const hikeIcon = row => cellText(row, 'favorite') ? 'favorite' : 'normal'
+const hikeRecomend = row => cellText(row, 'rec') ? 'favorite' : 'normal'
 const hikeInfo = row => {
   const parts = []
   const stats = hikeStats(row, false)
@@ -65,6 +66,7 @@ const hikePark = row => {
   if (cellText(parkRow, 'region')) parkInfo.push(cellText(parkRow, 'region'))
   return parkInfo.join(', ')
 }
+const hikeDogsIcon = row => cellIsYes(row, 'dogs') ? '<i class="far fa-dog"></i>' : ''
 const hikePost = row => cellText(row, 'blogposturl') ? `<a target="_blank" href="${cellText(row, 'blogposturl')}"><i class="far fa-images"></i></a>` : ''
 const hikeStats = (row, wrap=true) => {
   if (cellText(row, 'distance') || cellText(row, 'elevation')) {
@@ -242,14 +244,12 @@ jQuery(document).ready(function($) {
       hikes.forEach(hikeRow => {
         const hikeDate = moment(cellText(hikeRow, 'hikedate'))
         const blogurl = cellText(hikeRow, 'blogposturl')
-        let entry = ''
-        let blogicon = ''
-        if (blogurl) {
-          entry = `<a class="hike-card-link" href="${blogurl}">`
-          blogicon = `<i class="far fa-images"></i>`
-        }
+        const blogicon = blogurl ? `<i class="far fa-images"></i>` : ''
+        const dogicon = hikeDogsIcon(row)
+        const classRec = cellIsYes(row, 'rec') ? 'hike-recommended' : ''
+        let entry = blogurl ? `<a class="hike-card-link" href="${blogurl}">` : '';
         entry += `
-          <div class="page-subsection hike-card">
+          <div class="page-subsection hike-card ${classRec}">
             <div class="hike-card-date">
               <time datetime="${hikeDate.format('L')}" class="icon">
                 <div class='time-header'>${hikeDate.format('MMM')} ${hikeDate.format('YYYY')}</div>
@@ -258,7 +258,7 @@ jQuery(document).ready(function($) {
               </time>
             </div>
             <div class="hike-card-content">
-              <h6>${cellText(hikeRow, 'hikename')} ${blogicon}</h6>
+              <h6>${cellText(hikeRow, 'hikename')} ${blogicon} ${dogicon}</h6>
               <p>
               ${hikePark(hikeRow)}<br/>
               ${hikeInfo(hikeRow)}
