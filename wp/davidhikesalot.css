@@ -42,7 +42,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .bullet-icon { list-style: none; list-style-type: none; }
 .bullet-icon:before { font-family: "Font Awesome 5 Free"; margin: 0 5px 0 -20px; display: inline-block; vertical-align: middle; }
 .status-icon:before { font-family: "Font Awesome 5 Free"; margin: 0 5px; }
-.inline-icon:before { font-family: "Font Awesome 5 Free"; font-style: normal; }
+.inline-icon:before { font-family: "Font Awesome 5 Free"; display: inline-block; font-style: normal; }
 
 /* FontAwesome has a bug where 700 is solid and 900 is regular. Remove this when they fix it */
 .normal:before      { content: '\f111'; font-weight: 700; color: black; font-size: 2px; padding: 0 3px 2px 3px; }
@@ -55,8 +55,8 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .favorite:before    { content: '\f005'; }
 .blogpost:before     { content: '\f302'; }
 
-.hardhike:before { content: '\f7ad'; display: inline-block; transform: scale(1, -1); }
-.doghike:before { content: '\f6d3'; }
+.hardhike:before { content: '\f7ad'; transform: scale(1, -1); font-weight: 700; }
+.doghike:before { content: '\f6d3'; font-weight: 700; }
 .favhike:before { content: '\f0c8'; color: goldenrod; }
 
 /* Park Details */
