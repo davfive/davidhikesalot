@@ -55,9 +55,9 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .favorite:before    { content: '\f005'; }
 .blogpost:before     { content: '\f302'; }
 
-.hardhike:before { content: '\f7ad'; transform: rotate(180deg); transform: scale(-1); }
+.hardhike:before { content: '\f7ad'; display: inline-block; transform: scale(1, -1); }
 .doghike:before { content: '\f6d3'; }
-.favhike:before { content: '\f005'; color: goldenrod; }
+.favhike:before { content: '\f0c8'; color: goldenrod; }
 
 /* Park Details */
 #sectionParkDetails .park-card {
