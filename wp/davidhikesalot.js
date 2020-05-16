@@ -245,11 +245,12 @@ jQuery(document).ready(function($) {
         const hikeDate = moment(cellText(hikeRow, 'hikedate'))
         const blogurl = cellText(hikeRow, 'blogposturl')
         const blogicon = blogurl ? `<i class="far fa-images"></i>` : ''
-        const dogicon = hikeDogsIcon(hikeRow)
-        const classRec = cellIsYes(hikeRow, 'rec') ? 'hike-recommended' : ''
+        const dogicon = cellIsYes(hikeRow, 'hard') ? '<i class="inline-icon doghike"></i>' : ''
+        const hardicon = cellIsYes(hikeRow, 'hard') ? '<i class="inline-icon hardhike"></i>' : ''
+        const recClass = cellIsYes(hikeRow, 'rec') ? 'hike-recommended' : ''
         let entry = blogurl ? `<a class="hike-card-link" href="${blogurl}">` : '';
         entry += `
-          <div class="page-subsection hike-card ${classRec}">
+          <div class="page-subsection hike-card ${recClass}">
             <div class="hike-card-date">
               <time datetime="${hikeDate.format('L')}" class="icon">
                 <div class='time-header'>${hikeDate.format('MMM')} ${hikeDate.format('YYYY')}</div>
@@ -258,7 +259,7 @@ jQuery(document).ready(function($) {
               </time>
             </div>
             <div class="hike-card-content">
-              <h6>${cellText(hikeRow, 'hikename')} ${blogicon} ${dogicon}</h6>
+              <h6>${cellText(hikeRow, 'hikename')} ${blogicon} ${hardicon} ${dogicon}</h6>
               <p>
               ${hikePark(hikeRow)}<br/>
               ${hikeInfo(hikeRow)}
