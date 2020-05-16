@@ -55,7 +55,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .favorite:before    { content: '\f005'; }
 .blogpost:before     { content: '\f302'; }
 
-.hardhike:before { content: '\f7ad'; transform: scale(1, -1); font-weight: 700; }
+.hardhike:before { content: '\f7ad'; transform: scale(1, -1); padding-top: 2px; font-weight: 700; }
 .doghike:before { content: '\f6d3'; font-weight: 700; }
 .favhike:before { content: '\f0c8'; color: goldenrod; }
 
