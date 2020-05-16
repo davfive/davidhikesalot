@@ -245,7 +245,7 @@ jQuery(document).ready(function($) {
         const hikeDate = moment(cellText(hikeRow, 'hikedate'))
         const blogurl = cellText(hikeRow, 'blogposturl')
         const blogicon = blogurl ? `<i class="far fa-images"></i>` : ''
-        const dogicon = cellIsYes(hikeRow, 'hard') ? '<i class="inline-icon doghike"></i>' : ''
+        const dogicon = cellIsYes(hikeRow, 'dogs') ? '<i class="inline-icon doghike"></i>' : ''
         const hardicon = cellIsYes(hikeRow, 'hard') ? '<i class="inline-icon hardhike"></i>' : ''
         const recClass = cellIsYes(hikeRow, 'rec') ? 'hike-recommended' : ''
         let entry = blogurl ? `<a class="hike-card-link" href="${blogurl}">` : '';
