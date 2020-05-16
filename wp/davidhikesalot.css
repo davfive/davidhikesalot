@@ -54,6 +54,10 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .favorite:before    { content: '\f005'; }
 .blogpost:before     { content: '\f302'; }
 
+.hardhike { content: '\f7ad'; }
+.doghike { content: '\f6d3'; }
+.favhike { content: '\f005'; color: goldenrod; }
+
 /* Park Details */
 #sectionParkDetails .park-card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -106,6 +110,10 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 
 .hike-card-link, .hike-card-link:visited,.hike-card-link:hover,.hike-card-link:active {
   text-decoration:none;
+}
+
+.hike-icon-hard {
+  f7ad
 }
 
 #sectionHikesByDate .hike-card {
