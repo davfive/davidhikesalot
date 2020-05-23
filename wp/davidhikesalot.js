@@ -321,7 +321,7 @@ jQuery(document).ready(function($) {
         parkDiv += `<span class="small-text">${quickLinks.join(joiner)}<span>`
 
         // Park Hikes
-        ;['completed', 'planned', 'nexthike'].forEach(hikeStatus => {
+        ;['completed', 'nexthike', 'planned'].forEach(hikeStatus => {
           const hikes = getHikeListByStatus(hikeStatus, parkName)
           if (hikes.length) {
             parkDiv += `
