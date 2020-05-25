@@ -21,6 +21,10 @@ const cellText = (row, id) => {
   return (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] : ''
 }
 const cellIsEmpty = (row, id) => (['', '--'].indexOf(cellText(row, id)) >= 0)
+const getHikeDate = hikeRow => {
+  if (cellIsEmpty(hikeRow, 'hikedate')) return undefined
+  return moment(cellText(hikeRow, 'hikedate'), 'dd/mmm/yyyy')
+}
 const getHikeListByStatus = (hikeStatus, parkName) => {
   const filteredHikes = (hikeStatus, parkName) => {
     return parkName
@@ -238,11 +242,11 @@ jQuery(document).ready(function($) {
     if (pageHasElement('#sectionHikesByDate')) {
       const entries = []
       const hikes = Hikes.completed.filter(hikeRow => {
-        return !cellIsEmpty(hikeRow, 'hikedate') &&
-          moment(cellText(hikeRow, 'hikedate')).isValid()
+        const hikeDate = getHikeDate(hikeRow)
+        return !!hikeDate && hikeDate.isValid()
       }).sort(sortByHikeDate).reverse()
       hikes.forEach(hikeRow => {
-        const hikeDate = moment(cellText(hikeRow, 'hikedate'))
+        const hikeDate = getHikeDate(hikeRow)
         const blogurl = cellText(hikeRow, 'blogposturl')
         const blogicon = blogurl ? `<i class="far fa-images"></i>` : ''
         const dogicon = cellIsYes(hikeRow, 'dogs') ? '<i class="inline-icon doghike"></i>' : ''
