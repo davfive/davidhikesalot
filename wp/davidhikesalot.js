@@ -23,7 +23,7 @@ const cellText = (row, id) => {
 const cellIsEmpty = (row, id) => (['', '--'].indexOf(cellText(row, id)) >= 0)
 const getHikeDate = hikeRow => {
   if (cellIsEmpty(hikeRow, 'hikedate')) return undefined
-  return moment(cellText(hikeRow, 'hikedate'), 'dd/mmm/yyyy')
+  return moment(cellText(hikeRow, 'hikedate'), 'DD/MMM/YYYY')
 }
 const getHikeListByStatus = (hikeStatus, parkName) => {
   const filteredHikes = (hikeStatus, parkName) => {
