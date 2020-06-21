@@ -1,5 +1,5 @@
 const tinify = require('tinify')
-const ArgumentParser = require('argparse').ArgumentParser;
+const ArgumentParser = require('argparse').ArgumentParser
 const path = require('path')
 
 function tinifyBannerImage(args) {
@@ -37,13 +37,13 @@ tinyArgs.addArgument('apikey', {help: 'tinypng.com API key from https://tinypng.
 let cmd = cmds.addParser('parks', {aliases: ['p'], dest: 'tinify', parents: [tinyArgs],
   addHelp: true, description: 'Make web/mobile images with tinypng.org',
 })
-cmd.addArgument('infile', { help: 'Path to TrailsHiked image'})
+cmd.addArgument('infile', {help: 'Path to TrailsHiked image'})
 cmd.setDefaults({func: tinifyTrailsHikedImage})
 
 cmd = cmds.addParser('banner', {aliases: ['b'], dest: 'banner', parents: [tinyArgs],
   addHelp: true, description: 'Make web/mobile images with tinypng.org',
 })
-cmd.addArgument('infile', { help: 'Path to banner image'})
+cmd.addArgument('infile', {help: 'Path to banner image'})
 cmd.setDefaults({func: tinifyBannerImage})
 
 const args = parser.parseArgs()
