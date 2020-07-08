@@ -109,6 +109,9 @@ const sortByParkName = (rowA, rowB) => {
 }
 const updateOverallStats = (hikeStatus, distance, elevation, hikeDate) => {
   const addHikeStat = (statType, distance, elevation) => {
+    if (! (statType in OverallStats)) {
+      OverallStats[statType] = {parks: 0, hikes: 0, distance: 0.0, elevation: 0.0}
+    }
     OverallStats[statType].hikes++
     OverallStats[statType].distance += isNaN(distance) ? 0 : distance
     OverallStats[statType].elevation += isNaN(elevation) ? 0 : elevation
