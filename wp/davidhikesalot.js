@@ -194,7 +194,7 @@ jQuery(document).ready(function($) {
       const hikeStatus = cellText(hikesSheetRow, 'hikestatus')
       const hikeDate = cellText(hikesSheetRow, 'hikedate')
       if (!parkName || !hikeName) return // Not a hike
-      const inChallenge = (parkName in ParksByName) && cellText(ParksByName[parkName], 'eastbaychallenge')
+      const inChallenge = (parkName in ParksByName) && !!cellText(ParksByName[parkName], 'eastbaychallenge')
 
       initIfUndefined(Hikes, hikeStatus, [])
       Hikes[hikeStatus].push(hikesSheetRow)
