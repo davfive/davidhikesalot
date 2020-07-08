@@ -175,9 +175,9 @@ const updateParkStats = (park, hikeStatus, distance, elevation) => {
 
 const getStatsStringHtml = stats => {
   return `
-  ${stats.hikes} hikes;
-  ${stats.distance.toFixed(1).toLocaleString()} miles;
-  ${stats.elevation.toLocaleString()} elevation`
+  ${stats.hikes} hikes /
+  ${stats.distance.toFixed(1).toLocaleString()} miles /
+  ${stats.elevation.toLocaleString()} feet elevation`
 }
 
 const getStatsTableHtml = statsGroup => {
