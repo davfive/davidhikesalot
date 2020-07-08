@@ -49,6 +49,15 @@ const getHikeListByStatus = (hikeStatus, parkName) => {
     return hikes
   }, [])
 }
+const getHikesStatsByStatus = hikeStatus => {
+  return Hikes[hikeStatus].reduce((acc, hike) => {
+    acc.hikes++
+    acc.distance += parseFloat(cellText(hike, 'distance'))
+    acc.elevation += parseInt(cellText(hike, 'elevation'))
+    return acc
+  }, {hikes: 0, distance: 0.0, elevation: 0})
+}
+
 const parkInChallenge = parkRow => cellText(parkRow, 'eastbaychallenge') !== ''
 const parkGetProgress = parkRow => {
   const parkStatus = cellText(parkRow, 'eastbaychallenge')
@@ -247,7 +256,8 @@ jQuery(document).ready(function($) {
         if (pageHasElement(`#sectionHikes #${hikeStatus}`) && (hikeStatus in Hikes)) {
           const hikes = getHikeListByStatus(hikeStatus)
           if (hikes.length) {
-            $(`#sectionHikes #${hikeStatus} .hike-stats`).append(getStatsStringHtml(OverallStats[hikeStatus]))
+            const statStr = getStatsStringHtml(getHikesStatsByStatus(hikeStatus))
+            $(`#sectionHikes #${hikeStatus} .hike-stats`).append(statStr)
             $(`#sectionHikes #${hikeStatus} ul.hikes-list`).append(hikes.join(''))
           }
         }
