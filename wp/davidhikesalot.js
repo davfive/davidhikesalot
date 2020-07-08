@@ -120,7 +120,7 @@ const updateOverallStats = (hikeStatus, distance, elevation, hikeDate) => {
     addHikeStat('completed', distance, elevation)
     hikeDate = moment(hikeDate)
     if (hikeDate) {
-      addHikeStat(`year${hikeDate.year()}`, distance, elevation)
+      addHikeStat(hikeDate.year(), distance, elevation)
     }
   } else {
     addHikeStat('planned', distance, elevation)
@@ -197,43 +197,19 @@ jQuery(document).ready(function($) {
      */
 
     if (pageHasElement('#hikingStats')) {
-      let statTable = `
-<table class="stat-table">
-  <thead>
-    <th scope "col"></th>
-    <th scope "col">Hikes</th>
-    <th scope "col">Distance</th>
-    <th scope "col">Elevation</th>
-  </thead>
-  <tbody>`
-      const addStatRow = (name, numHikes, distance, elevation) => {
-        statTable += `
-    <tr>
-      <th scope="row">${name}</th>
-      <td>${numHikes}</td>
-      <td>${distance.toFixed(1).toLocaleString()}</td>
-      <td>${elevation.toLocaleString()}</td>
-    <tr>`
-      }
-      addStatRow('Done',
-          OverallStats.completed.hikes,
-          OverallStats.completed.distance,
-          OverallStats.completed.elevation,
-      )
-      Object.keys(OverallStats).filter(k => k.startsWith('year')).sort().reverse().slice(0, 2).forEach(yearDoneKey => {
-        const year = yearDoneKey.replace('year', '')
-        addStatRow(`• in ${year}`,
-            OverallStats[yearDoneKey].hikes,
-            OverallStats[yearDoneKey].distance,
-            OverallStats[yearDoneKey].elevation,
-        )
-      })
-      addStatRow('Planned',
-          OverallStats.planned.hikes,
-          OverallStats.planned.distance,
-          OverallStats.planned.elevation,
-      )
-      statTable += '</tbody></table>'
+      const statCols = ['planned', 'completed']
+      const years = Object.keys(OverallStats).filter(k => Number.isInteger(k))
+      statKeys.push(...years.sort().reverse())
+
+      let statTable = '<table class="stat-table"><thead><th></th>'
+      statTable += statCols.forEach(col => `<th>${col}</th>`)
+      statTable += '</thead><tbody><tr><th>Hikes</th>'
+      statTable += statCols.forEach(col => `<td>${OverallStats[col].hikes}</td>`)
+      statTable += '</tr><tr><th>Distance</th>'
+      statTable += statCols.forEach(col => `<td>${OverallStats[col].distance.toFixed(1).toLocaleString()}</td>`)
+      statTable += '</tr><tr><th>Elevation</th>'
+      statTable += statCols.forEach(col => `<td>${OverallStats[col].elevation.toLocaleString()}</td>`)
+      statTable += '</tr></tbody></table>'
       $('#hikingStats').append(statTable)
     }
 
