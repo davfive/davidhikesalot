@@ -70,7 +70,6 @@ const hikePark = row => {
   if (cellText(parkRow, 'region')) parkInfo.push(cellText(parkRow, 'region'))
   return parkInfo.join(', ')
 }
-const hikeDogsIcon = row => cellIsYes(row, 'dogs') ? '<i class="fas fa-dog"></i>' : ''
 const hikePost = row => cellText(row, 'blogposturl') ? `<a target="_blank" href="${cellText(row, 'blogposturl')}"><i class="far fa-images"></i></a>` : ''
 const hikeStats = (row, wrap=true) => {
   if (cellText(row, 'distance') || cellText(row, 'elevation')) {
@@ -108,13 +107,24 @@ const sortByParkName = (rowA, rowB) => {
   const parkB = cellText(rowB, 'parkname')
   return (parkA < parkB) ? -1 : (parkA > parkB) ? 1 : 0
 }
-const updateOverallStats = (hikeStatus, distance, elevation) => {
-  const statType = (hikeStatus === 'completed') ? 'completed' : 'planned'
-  OverallStats[statType].hikes++
-  OverallStats[statType].distance += isNaN(distance) ? 0 : distance
-  OverallStats[statType].elevation += isNaN(elevation) ? 0 : elevation
+const updateOverallStats = (hikeStatus, distance, elevation, hikeDate) => {
+  const addHikeStat = (type, distance, elevation) => {
+    OverallStats[statType].hikes++
+    OverallStats[statType].distance += isNaN(distance) ? 0 : distance
+    OverallStats[statType].elevation += isNaN(elevation) ? 0 : elevation
+  }
+  if (hikeStatus === 'completed') {
+    addHikeStat('completed', distance, elevation)
+    hikeDate = moment(hikeDate)
+    if (hikeDate) {
+      addHikeStat(`year${hikeDate.year()}`, distance, elevation)
+    }
+  } else {
+    addHikeStat('planned', distance, elevation)
+  }
 }
 const updateChallengeStats = parkStatus => {
+  if (!parkStatus) return
   switch (parkStatus) {
     case 'no-hikes':
       return // No park details for no-hikes. Just jump them to the park website
@@ -158,6 +168,7 @@ jQuery(document).ready(function($) {
       const parkName = cellText(hikesSheetRow, 'parkname')
       const hikeName = cellText(hikesSheetRow, 'hikename')
       const hikeStatus = cellText(hikesSheetRow, 'hikestatus')
+      const hikeDate = cellText(hikeSheetRow, 'hikedate')
       if (!parkName || !hikeName) return // Not a hike
 
       initIfUndefined(Hikes, hikeStatus, [])
@@ -166,7 +177,7 @@ jQuery(document).ready(function($) {
       const distance = parseFloat(cellText(hikesSheetRow, 'distance'))
       const elevation = parseFloat(cellText(hikesSheetRow, 'elevation'))
       updateParkStats(parkName, hikeStatus, distance, elevation)
-      updateOverallStats(hikeStatus, distance, elevation)
+      updateOverallStats(hikeStatus, distance, elevation, hikeDate)
     })
 
     parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
@@ -183,16 +194,44 @@ jQuery(document).ready(function($) {
      */
 
     if (pageHasElement('#hikingStats')) {
-      $('#hikingStats').append(`
-        Done: ${OverallStats.completed.parks} parks, 
-        ${OverallStats.completed.hikes} hikes, 
-        ${OverallStats.completed.distance.toFixed(1).toLocaleString()}mi, 
-        ${OverallStats.completed.elevation.toLocaleString()}ft
-        <br/>
-        Planned: ${OverallStats.planned.hikes} hikes, 
-        ${OverallStats.planned.distance.toFixed(1).toLocaleString()}mi, 
-        ${OverallStats.planned.elevation.toLocaleString()}ft
-      `)
+      const statTable = `
+<table class="table table-sm">
+  <thead>
+    <th scope "col"></th>
+    <th scope "col">Hikes</th>
+    <th scope "col">Distance</th>
+    <th scope "col">Elevation</th>
+  </thead>
+  <tbody>`
+      const addStatRow = (name, numHikes, distance, elevation) => {
+        statTable += `
+    <tr>
+      <th scope="row">${name}</th>
+      <td>${numHikes}</td>
+      <td>${distancetoFixed(1).toLocaleString()}</td>
+      <td>${elevation.toLocaleString()}</td>
+    <tr>`
+      }
+      addStatRow('Done',
+          OverallStats.completed.hikes,
+          OverallStats.completed.distance,
+          OverallStats.completed.elevation,
+      )
+      Object.keys(OverallStats).filter(k => k.startsWith('year')).forEach(yearDoneKey => {
+        const year = yearDoneKey.replace('year', '')
+        addStatRow(`• in ${year}`,
+            OverallStats[yearDoneKey].hikes,
+            OverallStats[yearDoneKey].distance,
+            OverallStats[yearDoneKey].elevation,
+        )
+      })
+      addStatRow('Planned',
+          OverallStats.planned.hikes,
+          OverallStats.planned.distance,
+          OverallStats.planned.elevation,
+      )
+      statTable += '</tbody></table>'
+      $('#hikingStats').append(statTable)
     }
 
     if (pageHasElement('#sectionHikes')) {
@@ -252,7 +291,7 @@ jQuery(document).ready(function($) {
         const dogicon = cellIsYes(hikeRow, 'dogs') ? '<i class="inline-icon doghike"></i>' : ''
         const hardicon = cellIsYes(hikeRow, 'hard') ? '<i class="inline-icon hardhike"></i>' : ''
         const recClass = cellIsYes(hikeRow, 'rec') ? 'hike-recommended' : ''
-        let entry = blogurl ? `<a class="hike-card-link" href="${blogurl}">` : '';
+        let entry = blogurl ? `<a class="hike-card-link" href="${blogurl}">` : ''
         entry += `
           <div class="page-subsection hike-card ${recClass}">
             <div class="hike-card-date">
