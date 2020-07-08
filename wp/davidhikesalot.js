@@ -125,7 +125,7 @@ const updateHikeStats = (hikeStatus, inChallenge, distance, elevation, hikeDate)
       statGroup[statType].hikes++
       statGroup[statType].distance += isNaN(distance) ? 0 : distance
       statGroup[statType].elevation += isNaN(elevation) ? 0 : elevation
-    }
+    })
   }
   if (hikeStatus === 'completed') {
     addHikeStat(OverallStats, 'completed', distance, elevation)
