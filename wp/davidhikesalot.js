@@ -178,7 +178,7 @@ const getStatsTableHtml = statsGroup => {
   const years = Object.keys(OverallStats).filter(k => !isNaN(k) && k >= 2019)
   statCols.push(...years.sort().reverse())
 
-  let statsTable = '<table class="stat-table"><thead><th></th>'
+  let statsTable = '<table class="hiking-stats-table"><thead><th></th>'
   statCols.forEach(col => statsTable += `<th>${col}</th>`)
   statsTable += '</thead><tbody><tr><th>Hikes</th>'
   statCols.forEach(col => statsTable += `<td>${statsGroup[col].hikes}</td>`)

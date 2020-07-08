@@ -59,13 +59,13 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .doghike:before { content: '\f6d3'; font-weight: 700; }
 .favhike:before { content: '\f0c8'; color: goldenrod; }
 
-#hikingStats table.stat-table { width: unset; margin: 0; padding: 0; }
-#hikingStats table.stat-table thead { border: 0; background: unset}
-#hikingStats table.stat-table tbody tr { border-top: 1px solid rgba(0, 0, 0, 0.12); }
+table.hiking-stats-table { width: unset; margin: 0; padding: 0; }
+table.hiking-stats-table thead { border: 0; background: unset}
+table.hiking-stats-table tbody tr { border-top: 1px solid rgba(0, 0, 0, 0.12); }
 
-#hikingStats table.stat-table thead th,
-#hikingStats table.stat-table tbody th,
-#hikingStats table.stat-table tbody td {
+table.hiking-stats-table thead th,
+table.hiking-stats-table tbody th,
+table.hiking-stats-table tbody td {
   font-size: 0.8rem;
   text-align: left;
   margin: 0;
@@ -73,7 +73,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   background: #fff;
   border: 0;
 }
-#hikingStats table.stat-table tbody tr { border-top: 1px solid rgba(0, 0, 0, 0.12); }
+table.hiking-stats-table tbody tr { border-top: 1px solid rgba(0, 0, 0, 0.12); }
 
 /* Park Details */
 #sectionParkDetails .park-card {
