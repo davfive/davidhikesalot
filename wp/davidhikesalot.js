@@ -246,7 +246,7 @@ jQuery(document).ready(function($) {
       }
       Object.keys(challengeParksGroups).forEach(parkStatusDivId => {
         const thisProgress = challengeParksGroups[parkStatusDivId]
-        $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${OverallStats[thisProgress].parks})</span>`)
+        $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${Challenge[thisProgress].parks})</span>`)
 
         ParkList.filter(row => parkInChallenge(row) && parkGetProgress(row) === thisProgress).forEach(parkSheetRow => {
           const parkName = cellText(parkSheetRow, 'parkname')
