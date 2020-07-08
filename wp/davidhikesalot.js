@@ -173,6 +173,10 @@ const updateParkStats = (park, hikeStatus, distance, elevation) => {
   ParkStats[park][statType].elevation += isNaN(elevation) ? 0 : elevation
 }
 
+const getStatsStringHtml = stats => {
+  return `${stats.hikes} hikes; ${stats..distance.toFixed(1).toLocaleString()} miles; ${elevation.toLocaleString()} elevation`
+}
+
 const getStatsTableHtml = statsGroup => {
   const statCols = ['planned', 'completed']
   const colNames = {planned: 'Planned', completed: 'Done'}
@@ -181,11 +185,11 @@ const getStatsTableHtml = statsGroup => {
 
   let statsTable = '<table class="hiking-stats-table"><thead><th></th>'
   statCols.forEach(col => statsTable += `<th>${col in colNames ? colNames[col] : col}</th>`)
-  statsTable += '</thead><tbody><tr><th>Hikes</th>'
+  statsTable += '</thead><tbody><tr><th>Total Hikes</th>'
   statCols.forEach(col => statsTable += `<td>${statsGroup[col].hikes}</td>`)
-  statsTable += '</tr><tr><th>Distance</th>'
+  statsTable += '</tr><tr><th>Distance (mi)</th>'
   statCols.forEach(col => statsTable += `<td>${statsGroup[col].distance.toFixed(1).toLocaleString()}</td>`)
-  statsTable += '</tr><tr><th>Elevation</th>'
+  statsTable += '</tr><tr><th>Elevation (ft)</th>'
   statCols.forEach(col => statsTable += `<td>${statsGroup[col].elevation.toLocaleString()}</td>`)
   statsTable += '</tr></tbody></table>'
   return statsTable
@@ -240,6 +244,7 @@ jQuery(document).ready(function($) {
         if (pageHasElement(`#sectionHikes #${hikeStatus}`) && (hikeStatus in Hikes)) {
           const hikes = getHikeListByStatus(hikeStatus)
           if (hikes.length) {
+            $(`#sectionHikes #${hikeStatus} .hikes-stats`).append(getStatsStringHtml(OverallStats[hikeStatus]))
             $(`#sectionHikes #${hikeStatus} ul.hikes-list`).append(hikes.join(''))
           }
         }
