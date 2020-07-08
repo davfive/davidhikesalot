@@ -173,21 +173,21 @@ const updateParkStats = (park, hikeStatus, distance, elevation) => {
   ParkStats[park][statType].elevation += isNaN(elevation) ? 0 : elevation
 }
 
-const writeStatsTable = (id, statsGroup) => {
+const getStatsTableHtml = statsGroup => {
   const statCols = ['planned', 'completed']
   const years = Object.keys(OverallStats).filter(k => !isNaN(k) && k >= 2019)
   statCols.push(...years.sort().reverse())
 
-  let statTable = '<table class="stat-table"><thead><th></th>'
-  statCols.forEach(col => statTable += `<th>${col}</th>`)
-  statTable += '</thead><tbody><tr><th>Hikes</th>'
-  statCols.forEach(col => statTable += `<td>${statsGroup[col].hikes}</td>`)
-  statTable += '</tr><tr><th>Distance</th>'
-  statCols.forEach(col => statTable += `<td>${statsGroup[col].distance.toFixed(1).toLocaleString()}</td>`)
-  statTable += '</tr><tr><th>Elevation</th>'
-  statCols.forEach(col => statTable += `<td>${statsGroup[col].elevation.toLocaleString()}</td>`)
-  statTable += '</tr></tbody></table>'
-  $(id).append(statTable)
+  let statsTable = '<table class="stat-table"><thead><th></th>'
+  statCols.forEach(col => statsTable += `<th>${col}</th>`)
+  statsTable += '</thead><tbody><tr><th>Hikes</th>'
+  statCols.forEach(col => statsTable += `<td>${statsGroup[col].hikes}</td>`)
+  statsTable += '</tr><tr><th>Distance</th>'
+  statCols.forEach(col => statsTable += `<td>${statsGroup[col].distance.toFixed(1).toLocaleString()}</td>`)
+  statsTable += '</tr><tr><th>Elevation</th>'
+  statCols.forEach(col => statsTable += `<td>${statsGroup[col].elevation.toLocaleString()}</td>`)
+  statsTable += '</tr></tbody></table>'
+  return statsTable
 }
 
 jQuery(document).ready(function($) {
@@ -227,11 +227,11 @@ jQuery(document).ready(function($) {
      */
 
     if (pageHasElement('#challengeStats')) {
-      writeStatsTable('#challengeStats', ChallengeStats)
+      $('#challengeStats').append(getStatsTableHtml(ChallengeStats))
     }
 
     if (pageHasElement('#hikingStats')) {
-      writeStatsTable('#hikingStats', OverallStats)
+      $('#hikingStats').append(getStatsTableHtml(OverallStats))
     }
 
     if (pageHasElement('#sectionHikes')) {
