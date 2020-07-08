@@ -220,7 +220,7 @@ jQuery(document).ready(function($) {
           OverallStats.completed.distance,
           OverallStats.completed.elevation,
       )
-      Object.keys(OverallStats).filter(k => k.startsWith('year')).forEach(yearDoneKey => {
+      Object.keys(OverallStats).filter(k => k.startsWith('year')).sort().reverse().slice(0, 2).forEach(yearDoneKey => {
         const year = yearDoneKey.replace('year', '')
         addStatRow(`• in ${year}`,
             OverallStats[yearDoneKey].hikes,
