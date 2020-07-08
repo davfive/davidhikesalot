@@ -59,6 +59,18 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .doghike:before { content: '\f6d3'; font-weight: 700; }
 .favhike:before { content: '\f0c8'; color: goldenrod; }
 
+#hikingStats table.stat-table {
+  border: 0;
+}
+
+#hikingStats table.stat-table th {
+
+}
+
+#hikingStats table.stat-table td {
+
+}
+
 /* Park Details */
 #sectionParkDetails .park-card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);

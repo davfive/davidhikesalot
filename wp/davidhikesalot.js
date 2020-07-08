@@ -198,7 +198,7 @@ jQuery(document).ready(function($) {
 
     if (pageHasElement('#hikingStats')) {
       let statTable = `
-<table class="table table-sm">
+<table class="stat-table">
   <thead>
     <th scope "col"></th>
     <th scope "col">Hikes</th>
