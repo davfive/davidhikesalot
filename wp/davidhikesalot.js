@@ -202,7 +202,7 @@ jQuery(document).ready(function($) {
       statCols.push(...years.sort().reverse())
 
       let statTable = '<table class="stat-table"><thead><th></th>'
-      statTable += statCols.forEach(col => `<th>${col}</th>`)
+      statCols.forEach(col => statTable += `<th>${col}</th>`)
       statTable += '</thead><tbody><tr><th>Hikes</th>'
       statCols.forEach(col => statTable += `<td>${OverallStats[col].hikes}</td>`)
       statTable += '</tr><tr><th>Distance</th>'
