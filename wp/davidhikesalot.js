@@ -168,7 +168,7 @@ jQuery(document).ready(function($) {
       const parkName = cellText(hikesSheetRow, 'parkname')
       const hikeName = cellText(hikesSheetRow, 'hikename')
       const hikeStatus = cellText(hikesSheetRow, 'hikestatus')
-      const hikeDate = cellText(hikeSheetRow, 'hikedate')
+      const hikeDate = cellText(hikesSheetRow, 'hikedate')
       if (!parkName || !hikeName) return // Not a hike
 
       initIfUndefined(Hikes, hikeStatus, [])
