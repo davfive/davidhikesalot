@@ -338,6 +338,8 @@ jQuery(document).ready(function($) {
       })
       if (entries.length) {
         $('#sectionHikesByDate').append(entries.join(''))
+        const statStr = getStatsStringHtml(getHikesStatsByStatus('completed'))
+        $(`#sectionHikesByDate .hike-stats`).append(statStr)
       }
     }
 
