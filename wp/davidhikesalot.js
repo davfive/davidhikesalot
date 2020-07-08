@@ -120,7 +120,7 @@ const updateHikeStats = (hikeStatus, inChallenge, distance, elevation, hikeDate)
   const addHikeStat = (statType, distance, elevation) => {
     statGroups.forEach(statGroup => {
       if (! (statType in statGroup)) {
-        statGroup[statType] = {parks: 0, hikes: 0, distance: 0.0, elevation: 0.0}
+        statGroup[statType] = {hikes: 0, distance: 0.0, elevation: 0.0}
       }
       statGroup[statType].hikes++
       statGroup[statType].distance += isNaN(distance) ? 0 : distance
@@ -130,7 +130,7 @@ const updateHikeStats = (hikeStatus, inChallenge, distance, elevation, hikeDate)
   if (hikeStatus === 'completed') {
     addHikeStat('completed', distance, elevation)
     hikeDate = moment(hikeDate)
-    if (hikeDate) {
+    if (hikeDate.isValid()) {
       addHikeStat(hikeDate.year(), distance, elevation)
     }
   } else {
