@@ -197,7 +197,7 @@ jQuery(document).ready(function($) {
      */
 
     if (pageHasElement('#hikingStats')) {
-      const statTable = `
+      let statTable = `
 <table class="table table-sm">
   <thead>
     <th scope "col"></th>
