@@ -60,6 +60,7 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .favhike:before { content: '\f0c8'; color: goldenrod; }
 
 #hikingStats table.stat-table thead th,
+#hikingStats table.stat-table tbody th,
 #hikingStats table.stat-table tbody td {
   background: #eeeeee;
   font-size: 0.8rem;
