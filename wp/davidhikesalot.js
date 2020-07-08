@@ -53,9 +53,9 @@ const getHikesStatsByStatus = hikeStatus => {
   return Hikes[hikeStatus].reduce((acc, hike) => {
     acc.hikes++
     const distance = cellText(hike, 'distance')
-    acc.distance += isNaN(distance) ? 0 : parseFloat(distance)
+    acc.distance += (distance && isNaN(distance)) ? 0 : parseFloat(distance)
     const elevation = cellText(hike, 'elevation')
-    acc.elevation += isNaN(elevation) ? 0 : parseFloat(elevation)
+    acc.elevation += (elevation && isNaN(elevation)) ? 0 : parseFloat(elevation)
     return acc
   }, {hikes: 0, distance: 0.0, elevation: 0})
 }
