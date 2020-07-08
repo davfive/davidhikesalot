@@ -3,10 +3,17 @@ const Hikes = {} // Hikes[hikeStatus] = [hikes]
 const OverallStats = {
   completed: {parks: 0, hikes: 0, distance: 0.0, elevation: 0.0},
   planned: {hikes: 0, distance: 0.0, elevation: 0.0},
+  /* YYYY: {...} // stats for each year added automatically */
+}
+const ChallengeStats = {
+  completed: {parks: 0, hikes: 0, distance: 0.0, elevation: 0.0},
+  planned: {hikes: 0, distance: 0.0, elevation: 0.0},
   inprogress: {parks: 0},
   notstarted: {parks: 0},
 }
-const Parks =[] // Parks[parkName] = parkSheetRow
+
+const ParksByName = {} // ParksByName[parkName] = parkSheetRow
+const ParkList = [] // ParkList[parkSheetRow]
 const ParkStats = {}
 const GoToParkOptions = []
 
@@ -63,7 +70,7 @@ const hikeInfo = row => {
 const hikeLink = row => cellText(row, 'mapurl') ? `<a target="_blank" href="${cellText(row, 'mapurl')}">${cellText(row, 'hikename')}</a>` : ''
 const hikePark = row => {
   const parkName = cellText(row, 'parkname')
-  const parkRow = Parks.find(e => cellText(e, 'parkname') === parkName)
+  const parkRow = ParkList.find(e => cellText(e, 'parkname') === parkName)
   if (!parkRow) return ''
   const parkInfo = [cellText(parkRow, 'fullname') || parkName]
   if (cellText(parkRow, 'city')) parkInfo.push(cellText(parkRow, 'city'))
@@ -107,41 +114,45 @@ const sortByParkName = (rowA, rowB) => {
   const parkB = cellText(rowB, 'parkname')
   return (parkA < parkB) ? -1 : (parkA > parkB) ? 1 : 0
 }
-const updateOverallStats = (hikeStatus, distance, elevation, hikeDate) => {
+const updateHikeStats = (hikeStatus, inChallenge, distance, elevation, hikeDate) => {
+  const statGroups = [OverallStats]
+  if (inChallenge) statGroups.push(ChallengeStats)
   const addHikeStat = (statType, distance, elevation) => {
-    if (! (statType in OverallStats)) {
-      OverallStats[statType] = {parks: 0, hikes: 0, distance: 0.0, elevation: 0.0}
+    statGroups.forEach(statGroup => {
+      if (! (statType in statGroup)) {
+        statGroup[statType] = {parks: 0, hikes: 0, distance: 0.0, elevation: 0.0}
+      }
+      statGroup[statType].hikes++
+      statGroup[statType].distance += isNaN(distance) ? 0 : distance
+      statGroup[statType].elevation += isNaN(elevation) ? 0 : elevation
     }
-    OverallStats[statType].hikes++
-    OverallStats[statType].distance += isNaN(distance) ? 0 : distance
-    OverallStats[statType].elevation += isNaN(elevation) ? 0 : elevation
   }
   if (hikeStatus === 'completed') {
-    addHikeStat('completed', distance, elevation)
+    addHikeStat(OverallStats, 'completed', distance, elevation)
     hikeDate = moment(hikeDate)
     if (hikeDate) {
-      addHikeStat(hikeDate.year(), distance, elevation)
+      addHikeStat(OverallStats, hikeDate.year(), distance, elevation)
     }
   } else {
-    addHikeStat('planned', distance, elevation)
+    addHikeStat(OverallStats, 'planned', distance, elevation)
   }
 }
-const updateChallengeStats = parkStatus => {
+const updateChallengeParkStats = parkStatus => {
   if (!parkStatus) return
   switch (parkStatus) {
     case 'no-hikes':
       return // No park details for no-hikes. Just jump them to the park website
 
     case 'completed':
-      OverallStats.completed.parks++
+      ChallengeStats.completed.parks++
       break
 
     case 'not-started':
-      OverallStats.notstarted.parks++
+      ChallengeStats.notstarted.parks++
       break
 
     default: // Will need to change when I add hikes not part of the challenge to the sheet
-      OverallStats.inprogress.parks++
+      ChallengeStats.inprogress.parks++
       break
   }
 }
@@ -167,12 +178,23 @@ jQuery(document).ready(function($) {
   lozadObserver.observe()
 
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl)).done(function(parksSheet, hikesSheet) {
+    parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
+      const parkName = cellText(parkSheetRow, 'parkname')
+      if (!parkName) return // Not a park
+      ParkList.push(parkSheetRow)
+      ParksByName[parkName] = parkSheetRow
+
+      const parkStatus = cellText(parkSheetRow, 'eastbaychallenge')
+      updateChallengeParkStats(parkStatus)
+    })
+
     hikesSheet[0].feed.entry.forEach(function(hikesSheetRow) {
       const parkName = cellText(hikesSheetRow, 'parkname')
       const hikeName = cellText(hikesSheetRow, 'hikename')
       const hikeStatus = cellText(hikesSheetRow, 'hikestatus')
       const hikeDate = cellText(hikesSheetRow, 'hikedate')
       if (!parkName || !hikeName) return // Not a hike
+      const inChallenge = (parkName in ParksByName) && cellText(ParksByName[parkName], 'eastbaychallenge'))
 
       initIfUndefined(Hikes, hikeStatus, [])
       Hikes[hikeStatus].push(hikesSheetRow)
@@ -180,16 +202,7 @@ jQuery(document).ready(function($) {
       const distance = parseFloat(cellText(hikesSheetRow, 'distance'))
       const elevation = parseFloat(cellText(hikesSheetRow, 'elevation'))
       updateParkStats(parkName, hikeStatus, distance, elevation)
-      updateOverallStats(hikeStatus, distance, elevation, hikeDate)
-    })
-
-    parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
-      const parkName = cellText(parkSheetRow, 'parkname')
-      if (!parkName) return // Not a park
-      Parks.push(parkSheetRow)
-
-      const parkStatus = cellText(parkSheetRow, 'eastbaychallenge')
-      updateChallengeStats(parkStatus)
+      updateHikeStats(hikeStatus, distance, elevation, hikeDate)
     })
 
     /**
@@ -235,7 +248,7 @@ jQuery(document).ready(function($) {
         const thisProgress = challengeParksGroups[parkStatusDivId]
         $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${OverallStats[thisProgress].parks})</span>`)
 
-        Parks.filter(row => parkInChallenge(row) && parkGetProgress(row) === thisProgress).forEach(parkSheetRow => {
+        ParkList.filter(row => parkInChallenge(row) && parkGetProgress(row) === thisProgress).forEach(parkSheetRow => {
           const parkName = cellText(parkSheetRow, 'parkname')
           const parkStatus = cellText(parkSheetRow, 'eastbaychallenge')
           const parkAnchorID = parkName.replace(/[^\w]/g, '-').toLowerCase()
@@ -300,7 +313,7 @@ jQuery(document).ready(function($) {
     }
 
     if (pageHasElement('#sectionParkDetails')) {
-      const parks = Parks.filter(parkRow => {
+      const parks = ParkList.filter(parkRow => {
         const parkName = cellText(parkRow, 'parkname')
         return (parkName in ParkStats && ParkStats[parkName].total.hikes > 0)
       })

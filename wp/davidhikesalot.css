@@ -75,7 +75,6 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 }
 #hikingStats table.stat-table tbody tr { border-top: 1px solid rgba(0, 0, 0, 0.12); }
 
-
 /* Park Details */
 #sectionParkDetails .park-card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
