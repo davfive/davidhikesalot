@@ -173,6 +173,23 @@ const updateParkStats = (park, hikeStatus, distance, elevation) => {
   ParkStats[park][statType].elevation += isNaN(elevation) ? 0 : elevation
 }
 
+const writeStatsTable = (id, statsGroup) => {
+  const statCols = ['planned', 'completed']
+  const years = Object.keys(OverallStats).filter(k => !isNaN(k) && k >= 2019)
+  statCols.push(...years.sort().reverse())
+
+  let statTable = '<table class="stat-table"><thead><th></th>'
+  statCols.forEach(col => statTable += `<th>${col}</th>`)
+  statTable += '</thead><tbody><tr><th>Hikes</th>'
+  statCols.forEach(col => statTable += `<td>${statsGroup[col].hikes}</td>`)
+  statTable += '</tr><tr><th>Distance</th>'
+  statCols.forEach(col => statTable += `<td>${statsGroup[col].distance.toFixed(1).toLocaleString()}</td>`)
+  statTable += '</tr><tr><th>Elevation</th>'
+  statCols.forEach(col => statTable += `<td>${statsGroup[col].elevation.toLocaleString()}</td>`)
+  statTable += '</tr></tbody></table>'
+  $(id).append(statTable)
+}
+
 jQuery(document).ready(function($) {
   const lozadObserver = lozad()
   lozadObserver.observe()
@@ -209,21 +226,12 @@ jQuery(document).ready(function($) {
      *  Now just check and see which divs pages are looking for and fill them in
      */
 
-    if (pageHasElement('#hikingStats')) {
-      const statCols = ['planned', 'completed']
-      const years = Object.keys(OverallStats).filter(k => !isNaN(k) && k >= 2019)
-      statCols.push(...years.sort().reverse())
+    if (pageHasElement('#challengeStats')) {
+      writeStatsTable('#challengeStats', ChallengeStats)
+    }
 
-      let statTable = '<table class="stat-table"><thead><th></th>'
-      statCols.forEach(col => statTable += `<th>${col}</th>`)
-      statTable += '</thead><tbody><tr><th>Hikes</th>'
-      statCols.forEach(col => statTable += `<td>${OverallStats[col].hikes}</td>`)
-      statTable += '</tr><tr><th>Distance</th>'
-      statCols.forEach(col => statTable += `<td>${OverallStats[col].distance.toFixed(1).toLocaleString()}</td>`)
-      statTable += '</tr><tr><th>Elevation</th>'
-      statCols.forEach(col => statTable += `<td>${OverallStats[col].elevation.toLocaleString()}</td>`)
-      statTable += '</tr></tbody></table>'
-      $('#hikingStats').append(statTable)
+    if (pageHasElement('#hikingStats')) {
+      writeStatsTable('#hikingStats', OverallStats)
     }
 
     if (pageHasElement('#sectionHikes')) {
