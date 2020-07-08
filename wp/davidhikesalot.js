@@ -175,11 +175,12 @@ const updateParkStats = (park, hikeStatus, distance, elevation) => {
 
 const getStatsTableHtml = statsGroup => {
   const statCols = ['planned', 'completed']
+  const colNames = {planned: 'Planned', completed: 'Done'}
   const years = Object.keys(OverallStats).filter(k => !isNaN(k) && k >= 2019)
   statCols.push(...years.sort().reverse())
 
   let statsTable = '<table class="hiking-stats-table"><thead><th></th>'
-  statCols.forEach(col => statsTable += `<th>${col}</th>`)
+  statCols.forEach(col => statsTable += `<th>${col in colNames ? colNames[col] : col}</th>`)
   statsTable += '</thead><tbody><tr><th>Hikes</th>'
   statCols.forEach(col => statsTable += `<td>${statsGroup[col].hikes}</td>`)
   statsTable += '</tr><tr><th>Distance</th>'
