@@ -198,7 +198,7 @@ jQuery(document).ready(function($) {
 
     if (pageHasElement('#hikingStats')) {
       const statCols = ['planned', 'completed']
-      const years = Object.keys(OverallStats).filter(k => Number.isInteger(k))
+      const years = Object.keys(OverallStats).filter(k => !isNaN(k))
       statCols.push(...years.sort().reverse())
 
       let statTable = '<table class="stat-table"><thead><th></th>'
