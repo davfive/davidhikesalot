@@ -70,6 +70,13 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
   border: 0;
   box-sizing: border-box;
 }
+#hikingStats table.stat-table tbody th {
+  background: #eeeeee;
+  text-align: left;
+}
+#hikingStats table.stat-table tbody td {
+  background: rgba(0, 0, 0, 0.08);
+}
 
 /* Park Details */
 #sectionParkDetails .park-card {
