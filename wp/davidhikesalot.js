@@ -204,11 +204,11 @@ jQuery(document).ready(function($) {
       let statTable = '<table class="stat-table"><thead><th></th>'
       statTable += statCols.forEach(col => `<th>${col}</th>`)
       statTable += '</thead><tbody><tr><th>Hikes</th>'
-      statTable += statCols.forEach(col => `<td>${OverallStats[col].hikes}</td>`)
+      statTable += statCols.reduce((s, col) => `${s}<td>${OverallStats[col].hikes}</td>`, '')
       statTable += '</tr><tr><th>Distance</th>'
-      statTable += statCols.forEach(col => `<td>${OverallStats[col].distance.toFixed(1).toLocaleString()}</td>`)
+      statTable += statCols.forEach((s, col) => `${s}<td>${OverallStats[col].distance.toFixed(1).toLocaleString()}</td>`, '')
       statTable += '</tr><tr><th>Elevation</th>'
-      statTable += statCols.forEach(col => `<td>${OverallStats[col].elevation.toLocaleString()}</td>`)
+      statTable += statCols.forEach((s, col) => `${s}<td>${OverallStats[col].elevation.toLocaleString()}</td>`, '')
       statTable += '</tr></tbody></table>'
       $('#hikingStats').append(statTable)
     }
