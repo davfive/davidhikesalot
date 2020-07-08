@@ -59,23 +59,19 @@ ul.hikes-list li { list-style: none; list-style-type: none; }
 .doghike:before { content: '\f6d3'; font-weight: 700; }
 .favhike:before { content: '\f0c8'; color: goldenrod; }
 
+#hikingStats table.stat-table { width: unset; margin: 0; padding: 0; }
+#hikingStats table.stat-table thead { border: 0; }
+#hikingStats table.stat-table tbody { border-top: 1px solid rgba(0, 0, 0, 0.12); }
+
 #hikingStats table.stat-table thead th,
 #hikingStats table.stat-table tbody th,
 #hikingStats table.stat-table tbody td {
-  background: #eeeeee;
   font-size: 0.8rem;
-  text-align: center;
+  text-align: left;
   margin: 0;
   padding: 0;
   border: 0;
   box-sizing: border-box;
-}
-#hikingStats table.stat-table tbody th {
-  background: #eeeeee;
-  text-align: left;
-}
-#hikingStats table.stat-table tbody td {
-  background: rgba(0, 0, 0, 0.08);
 }
 
 /* Park Details */
