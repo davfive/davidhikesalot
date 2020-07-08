@@ -244,7 +244,7 @@ jQuery(document).ready(function($) {
         if (pageHasElement(`#sectionHikes #${hikeStatus}`) && (hikeStatus in Hikes)) {
           const hikes = getHikeListByStatus(hikeStatus)
           if (hikes.length) {
-            $(`#sectionHikes #${hikeStatus} .hikes-stats`).append(getStatsStringHtml(OverallStats[hikeStatus]))
+            $(`#sectionHikes #${hikeStatus} .hike-stats`).append(getStatsStringHtml(OverallStats[hikeStatus]))
             $(`#sectionHikes #${hikeStatus} ul.hikes-list`).append(hikes.join(''))
           }
         }
