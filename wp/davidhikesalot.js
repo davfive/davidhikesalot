@@ -211,7 +211,7 @@ jQuery(document).ready(function($) {
     <tr>
       <th scope="row">${name}</th>
       <td>${numHikes}</td>
-      <td>${distancetoFixed(1).toLocaleString()}</td>
+      <td>${distance.toFixed(1).toLocaleString()}</td>
       <td>${elevation.toLocaleString()}</td>
     <tr>`
       }
