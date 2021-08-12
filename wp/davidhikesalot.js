@@ -215,7 +215,7 @@ jQuery(document).ready(function($) {
   
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
     .fail(function() {
-      alert('Google rejected request to read hiking database. Booo!!!<br/>Click OK to reload page and try again')
+      alert('Google failed request to read hiking sheet. Booo!!!\n\nClick OK to reload page and try again')
       window.location.reload()
     })
     .done(function(parksSheet, hikesSheet) {
