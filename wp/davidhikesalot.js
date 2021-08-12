@@ -210,10 +210,14 @@ const getStatsTableHtml = statsGroup => {
 }
 
 jQuery(document).ready(function($) {
+  let parksSheet, hikesSheet
   const lozadObserver = lozad()
   lozadObserver.observe()
-  $.ajaxSetup({timeout: 5000})
-  $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl)).done(function(parksSheet, hikesSheet) {
+  $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
+    .fail(function() { alert('Can read database') })
+    .done(function(parksSheet, hikesSheet) {
+  
+    $.getJSON(ParksSheetUrl).
     parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
       const parkName = cellText(parkSheetRow, 'parkname')
       if (!parkName) return // Not a park
