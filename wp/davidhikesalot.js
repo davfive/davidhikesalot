@@ -19,8 +19,8 @@ const GoToParkOptions = []
 
 /* Global Info */
 const SmallMedia = window.matchMedia('only screen and (max-width: 768px)').matches
-const ParksSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/ooywmlb/public/values?alt=json'
-const HikesSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/o6rptkw/public/values?alt=json'
+const ParksSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json'
+const HikesSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json'
 
 /* Utility Functions */
 const cellIsYes = (row, id) => (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] === 'yes' : false
