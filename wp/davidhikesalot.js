@@ -217,7 +217,6 @@ jQuery(document).ready(function($) {
     .fail(function() { alert('Can read database') })
     .done(function(parksSheet, hikesSheet) {
   
-    $.getJSON(ParksSheetUrl).
     parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
       const parkName = cellText(parkSheetRow, 'parkname')
       if (!parkName) return // Not a park
