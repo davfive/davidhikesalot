@@ -24,7 +24,7 @@ const GoToParkOptions = []
 const SmallMedia = window.matchMedia('only screen and (max-width: 768px)').matches
 const ParksSheetUrl = `https://rawcdn.githack.com/davfive/davidhikesalot/${thisJsGitCommit}/parkssheet.json`
 // real: 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json'
-const HikesSheetUrl = `https://rawcdn.githack.com/davfive/davidhikesalot/${thisJsGitCommit}/parkssheet.json`
+const HikesSheetUrl = `https://rawcdn.githack.com/davfive/davidhikesalot/${thisJsGitCommit}/hikessheet.json`
 // real: 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json'
 
 /* Utility Functions */
