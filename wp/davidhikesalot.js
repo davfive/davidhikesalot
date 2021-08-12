@@ -1,6 +1,3 @@
-// From raw.githack.com (allows me to auto-lookup: https://raw.githack.com/davfive/davidhikesalot/<commitid>/wp/davidhikesalot.js)
-const thisJsGitCommit = document.currentScript.src.split('/').reverse()[2]
-
 /* Global Containers (in lieus of multi-file classes) */
 const Hikes = {} // Hikes[hikeStatus] = [hikes]
 const OverallStats = {
