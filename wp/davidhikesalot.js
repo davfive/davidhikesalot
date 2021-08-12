@@ -1,3 +1,6 @@
+// From raw.githack.com (allows me to auto-lookup: https://raw.githack.com/davfive/davidhikesalot/<commitid>/wp/davidhikesalot.js)
+const thisJsGitCommit = document.currentScript.src.split('/').reverse()[2]
+
 /* Global Containers (in lieus of multi-file classes) */
 const Hikes = {} // Hikes[hikeStatus] = [hikes]
 const OverallStats = {
@@ -19,8 +22,10 @@ const GoToParkOptions = []
 
 /* Global Info */
 const SmallMedia = window.matchMedia('only screen and (max-width: 768px)').matches
-const ParksSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json'
-const HikesSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json'
+const ParksSheetUrl = `https://rawcdn.githack.com/davfive/davidhikesalot/${thisJsGitCommit}/parkssheet.json`
+// real: 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json'
+const HikesSheetUrl = `https://rawcdn.githack.com/davfive/davidhikesalot/${thisJsGitCommit}/parkssheet.json`
+// real: 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json'
 
 /* Utility Functions */
 const cellIsYes = (row, id) => (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] === 'yes' : false
