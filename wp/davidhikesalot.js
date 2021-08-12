@@ -209,11 +209,15 @@ const getStatsTableHtml = statsGroup => {
   return statsTable
 }
 
+
+
 jQuery(document).ready(function($) {
   let parksSheet, hikesSheet
   const lozadObserver = lozad()
   lozadObserver.observe()
-  $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
+  
+  const getJSONTimeout = (url, timeout) => $.ajax({dataType: 'json', url, timeout: 5000}
+  $.when(getJSONTimeout(ParksSheetUrl), getJSONTimeout(HikesSheetUrl))
     .fail(function() { alert('Can read database') })
     .done(function(parksSheet, hikesSheet) {
   
