@@ -22,10 +22,8 @@ const GoToParkOptions = []
 
 /* Global Info */
 const SmallMedia = window.matchMedia('only screen and (max-width: 768px)').matches
-const ParksSheetUrl = `https://rawcdn.githack.com/davfive/davidhikesalot/${thisJsGitCommit}/parkssheet.json`
-// real: 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json'
-const HikesSheetUrl = `https://rawcdn.githack.com/davfive/davidhikesalot/${thisJsGitCommit}/hikessheet.json`
-// real: 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json'
+const ParksSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json'
+const HikesSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json'
 
 /* Utility Functions */
 const cellIsYes = (row, id) => (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] === 'yes' : false
@@ -217,7 +215,7 @@ const getStatsTableHtml = statsGroup => {
 jQuery(document).ready(function($) {
   const lozadObserver = lozad()
   lozadObserver.observe()
-
+  $.ajaxSetup({timeout: 5000})
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl)).done(function(parksSheet, hikesSheet) {
     parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
       const parkName = cellText(parkSheetRow, 'parkname')
