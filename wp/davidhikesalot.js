@@ -214,7 +214,10 @@ jQuery(document).ready(function($) {
   lozadObserver.observe()
   
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
-    .fail(function() { alert('Google rejected request to read hiking database. Booo!!!<br/>Click OK to reload page and try again') })
+    .fail(function() {
+      alert('Google rejected request to read hiking database. Booo!!!<br/>Click OK to reload page and try again')
+      window.location.reload()
+    })
     .done(function(parksSheet, hikesSheet) {
   
     parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
