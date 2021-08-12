@@ -210,12 +210,11 @@ const getStatsTableHtml = statsGroup => {
 }
 
 jQuery(document).ready(function($) {
-  let parksSheet, hikesSheet
   const lozadObserver = lozad()
   lozadObserver.observe()
   
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
-    .fail(function() { alert('Google rejected request to read hiking database. Booo!!! Refresh page to try again') })
+    .fail(function() { alert('Google rejected request to read hiking database. Booo!!!<br/>Click OK to reload page and try again') })
     .done(function(parksSheet, hikesSheet) {
   
     parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
