@@ -10,7 +10,7 @@
 <link crossorigin='anonymous' rel="stylesheet"  href="https://rawcdn.githack.com/davfive/davidhikesalot/3063265/wp/davidhikesalot.css">
 
 <!-- BEFORE THE </BODY> CLOSING TAG (FOOTER) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
 <!-- script src="https://raw.githack.com/davfive/davidhikesalot/3063265/wp/davidhikesalot.js"></script -->
