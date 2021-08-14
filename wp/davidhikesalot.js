@@ -219,7 +219,7 @@ jQuery(document).ready(function($) {
 
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
     .done(function(parksSheetResponse, hikesSheetResponse) {
-      if (parksSheetResponse[0].status !== 200 || hikesSheetResponse[0] !== 200) {
+      if (parksSheetResponse[0].status !== 200 || hikesSheetResponse[0].status !== 200) {
         console.error('Error: Failed to get hiking info from database.')
         console.error(`parksAPI[${parksSheetResponse[0].status}]: ${parksSheetResponse[0].message}`)
         console.error(`hikesAPI[${hikesSheetResponse[0].status}]: ${hikesSheetResponse[0].message}`)      
