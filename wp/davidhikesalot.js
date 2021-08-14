@@ -28,7 +28,7 @@ const cellText = (row, id) => {
 const cellIsEmpty = (row, id) => (['', '--'].indexOf(cellText(row, id)) >= 0)
 
 const strIsDate = s => Date.parse(s) !== NaN
-const strToDate = s => strIsDate(s) ? moment(s, 'DD/MMM/YYYY') : moment.invalid()
+const strToDate = s => strIsDate(s) ? moment(s) : moment.invalid()
 const cellIsDate = (row, id) => strIsDate(cellText(row, id))
 const cellToDate = (row, id) => strToDate(cellText(row, id))
 const getHikeDate = hikeRow => cellToDate(hikeRow, 'hikedate')
