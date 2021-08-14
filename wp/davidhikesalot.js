@@ -216,7 +216,8 @@ jQuery(document).ready(function($) {
   lozadObserver.observe()
   
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
-    .fail(function() {
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      console.error(`getJSON request failed with ${textStatus} / ${JSON.stringify(errorThrown)}`); 
       alert('Google failed request to read hiking sheet. Booo!!!\n\nClick OK to reload page and try again')
       window.location.reload()
     })
