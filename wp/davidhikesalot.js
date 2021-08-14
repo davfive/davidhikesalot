@@ -21,9 +21,9 @@ const GoToParkOptions = []
 const SmallMedia = window.matchMedia('only screen and (max-width: 768px)').matches
 
 /* Utility Functions */
-const cellIsYes = (row, id) => (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] === 'yes' : false
+const cellIsYes = (row, id) => (id && (id in row)) ? row[id] === 'yes' : false
 const cellText = (row, id) => {
-  return (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] : ''
+  return (id && (id in row)) ? row[id] : ''
 }
 const cellIsEmpty = (row, id) => (['', '--'].indexOf(cellText(row, id)) >= 0)
 const getHikeDate = hikeRow => {
@@ -218,9 +218,10 @@ jQuery(document).ready(function($) {
       alert('I was unable to get the hiking info. Sorry for the inconvenience. Please click OK to retry (may take a few tries).\n\nWhy? Google changed their spreadsheet APIs (v3 to v4) and randomly fails v3 calls as a warning. I am currently updating my site to support the new APIs. Thanks for your patience.')
       window.location.reload()
     })
-    .done(function(parksSheet, hikesSheet) {
-  
-    parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
+    .done(function(parksSheetResponse, hikesSheetResponse) {
+    const parksSheet = parksSheetResponse[0].rows
+    const hikesSheet = hikesSheetResponse[0].rows
+    parksSheet.forEach(function(parkSheetRow, parkSheetIdx) {
       const parkName = cellText(parkSheetRow, 'parkname')
       if (!parkName) return // Not a park
       ParkList.push(parkSheetRow)
@@ -230,7 +231,7 @@ jQuery(document).ready(function($) {
       updateChallengeParkStats(parkStatus)
     })
 
-    hikesSheet[0].feed.entry.forEach(function(hikesSheetRow) {
+    hikesSheet.forEach(function(hikesSheetRow) {
       const parkName = cellText(hikesSheetRow, 'parkname')
       const hikeName = cellText(hikesSheetRow, 'hikename')
       const hikeStatus = cellText(hikesSheetRow, 'hikestatus')
