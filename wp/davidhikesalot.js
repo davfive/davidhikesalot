@@ -138,9 +138,11 @@ const updateHikeStats = (hikeStatus, inChallenge, distance, elevation, hikeDate)
   }
   if (hikeStatus === 'completed') {
     addHikeStat('completed', distance, elevation)
-    hikeDate = moment(hikeDate)
-    if (hikeDate.isValid()) {
-      addHikeStat(hikeDate.year(), distance, elevation)
+    if (hikeDate) {
+      hikeDate = moment(hikeDate)
+      if (hikeDate.isValid()) {
+        addHikeStat(hikeDate.year(), distance, elevation)
+      }
     }
   } else {
     addHikeStat('planned', distance, elevation)
