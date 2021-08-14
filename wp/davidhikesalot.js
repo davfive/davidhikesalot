@@ -215,7 +215,7 @@ jQuery(document).ready(function($) {
   
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
     .fail(function() {
-      alert('Google is done with v3 of their APIs and randomly fails them as a warning.\nThis will stop when I move to v4.\nClick OK to retry (may take a few tries).')
+      alert('Sorry for the inconvenience. I am currently working on updated my site.\n\nClick OK to retry (may take a few tries).\n\nWhy? Google changed their spreadsheet APIs (v3 to v4) and randomly fails v3 calls as a warning. I am currently updated my site to support the new APIs. Thanks for your patiences.')
       window.location.reload()
     })
     .done(function(parksSheet, hikesSheet) {
