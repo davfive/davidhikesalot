@@ -21,7 +21,7 @@ const GoToParkOptions = []
 const SmallMedia = window.matchMedia('only screen and (max-width: 768px)').matches
 
 /* Google Spreadsheet APIs */
-const gApiBase {
+const gApiBase = {
   v3: 'https://spreadsheets.google.com/feeds/',
   v4: 'https://www.googleapis.com/auth/spreadsheets.readonly/'
 }
