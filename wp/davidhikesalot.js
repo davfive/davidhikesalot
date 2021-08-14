@@ -25,8 +25,8 @@ const gApiBase = {
   v3: 'https://spreadsheets.google.com/feeds/',
   v4: 'https://www.googleapis.com/auth/spreadsheets.readonly/'
 }
-const ParksSheetUrl = `${gApiBase.v4}list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json`
-const HikesSheetUrl = `${gApiBase.v4}list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json`
+const ParksSheetUrl = `${gApiBase.v3}list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json`
+const HikesSheetUrl = `${gApiBase.v3}list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json`
 
 /* Utility Functions */
 const cellIsYes = (row, id) => (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] === 'yes' : false
@@ -221,14 +221,15 @@ jQuery(document).ready(function($) {
   const lozadObserver = lozad()
   lozadObserver.observe()
   
-  $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
+  $.when(fetch(ParksSheetUrl), fetch(HikesSheetUrl))
     .fail(function(jqXHR, textStatus, errorThrown) {
       console.error(`getJSON request failed with ${textStatus} / ${JSON.stringify(errorThrown)}`); 
       alert('Google failed request to read hiking sheet. Booo!!!\n\nClick OK to reload page and try again')
       window.location.reload()
     })
     .done(function(parksSheet, hikesSheet) {
-  
+    parksSheet = parksSheet.json()
+    hikesSheet = hikesSheet.json()
     parksSheet[0].feed.entry.forEach(function(parkSheetRow, parkSheetIdx) {
       const parkName = cellText(parkSheetRow, 'parkname')
       if (!parkName) return // Not a park
