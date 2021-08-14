@@ -216,225 +216,229 @@ jQuery(document).ready(function($) {
   
   const ParksSheetUrl = 'https://script.google.com/macros/s/AKfycbwzfA7hwgguH3TAu2_QWMPncVNho3VNpJfyimwIlQIJE7dngm6JLYxCWHnFzDMbJWnBiA/exec?sheet=parks'
   const HikesSheetUrl = 'https://script.google.com/macros/s/AKfycbwzfA7hwgguH3TAu2_QWMPncVNho3VNpJfyimwIlQIJE7dngm6JLYxCWHnFzDMbJWnBiA/exec?sheet=hikes'
+
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
-    .fail(function() {
-      alert('I was unable to get the hiking info. Sorry for the inconvenience. Please click OK to retry (may take a few tries).\n\nWhy? Google changed their spreadsheet APIs (v3 to v4) and randomly fails v3 calls as a warning. I am currently updating my site to support the new APIs. Thanks for your patience.')
-      window.location.reload()
-    })
     .done(function(parksSheetResponse, hikesSheetResponse) {
-    const parksSheet = parksSheetResponse[0].rows
-    const hikesSheet = hikesSheetResponse[0].rows
-    parksSheet.forEach(function(parkSheetRow, parkSheetIdx) {
-      const parkName = cellText(parkSheetRow, 'parkname')
-      if (!parkName) return // Not a park
-      ParkList.push(parkSheetRow)
-      ParksByName[parkName] = parkSheetRow
-
-      const parkStatus = cellText(parkSheetRow, 'eastbaychallenge')
-      updateChallengeParkStats(parkStatus)
-    })
-
-    hikesSheet.forEach(function(hikesSheetRow) {
-      const parkName = cellText(hikesSheetRow, 'parkname')
-      const hikeName = cellText(hikesSheetRow, 'hikename')
-      const hikeStatus = cellText(hikesSheetRow, 'hikestatus')
-      const hikeDate = cellText(hikesSheetRow, 'hikedate')
-      if (!parkName || !hikeName) return // Not a hike
-      const inChallenge = (parkName in ParksByName) && !!cellText(ParksByName[parkName], 'eastbaychallenge')
-
-      initIfUndefined(Hikes, hikeStatus, [])
-      Hikes[hikeStatus].push(hikesSheetRow)
-
-      const distance = parseFloat(cellText(hikesSheetRow, 'distance'))
-      const elevation = parseFloat(cellText(hikesSheetRow, 'elevation'))
-      updateParkStats(parkName, hikeStatus, distance, elevation)
-      updateHikeStats(hikeStatus, inChallenge, distance, elevation, hikeDate)
-    })
-
-    /**
-     *  Now just check and see which divs pages are looking for and fill them in
-     */
-
-    if (pageHasElement('#challengeStats')) {
-      $('#challengeStats').append(getStatsTableHtml(ChallengeStats))
-    }
-
-    if (pageHasElement('#hikingStats')) {
-      $('#hikingStats').append(getStatsTableHtml(OverallStats))
-    }
-
-    if (pageHasElement('#sectionHikes')) {
-      ['completed', 'planned', 'nexthike'].forEach(hikeStatus => {
-        if (pageHasElement(`#sectionHikes #${hikeStatus}`) && (hikeStatus in Hikes)) {
-          const hikes = getHikeListByStatus(hikeStatus)
-          if (hikes.length) {
-            const statStr = getStatsStringHtml(getHikesStatsByStatus(hikeStatus))
-            $(`#sectionHikes #${hikeStatus} .hike-stats`).append(statStr)
-            $(`#sectionHikes #${hikeStatus} ul.hikes-list`).append(hikes.join(''))
-          }
-        }
-      })
-    }
-
-    if (pageHasElement('#sectionChallenge')) {
-      const challengeParksGroups = {
-        // listDivId: progress-group
-        parksCompleted: 'completed',
-        parksInProgress: 'inprogress',
-        parksNotStarted: 'notstarted',
+      if (parksSheetResponse[0].status !== 200 || hikesSheetResponse[0] !== 200) {
+        console.error('Error: Failed to get hiking info from database.')
+        console.error(`parksAPI[${parksSheetResponse[0].status}]: ${parksSheetResponse[0].message}`)
+        console.error(`hikesAPI[${hikesSheetResponse[0].status}]: ${hikesSheetResponse[0].message}`)      
+        return // error 
       }
-      Object.keys(challengeParksGroups).forEach(parkStatusDivId => {
-        const thisProgress = challengeParksGroups[parkStatusDivId]
-        $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${ChallengeStats[thisProgress].parks})</span>`)
 
-        ParkList.filter(row => parkInChallenge(row) && parkGetProgress(row) === thisProgress).forEach(parkSheetRow => {
-          const parkName = cellText(parkSheetRow, 'parkname')
-          const parkStatus = cellText(parkSheetRow, 'eastbaychallenge')
-          const parkAnchorID = parkName.replace(/[^\w]/g, '-').toLowerCase()
-          const parkHasHikes = (parkName in ParkStats && ParkStats[parkName].total.hikes)
-          const missingHikesFlag = cellIsEmpty(parkSheetRow, 'trailshikedid')
-          const missingHikesMarker = (missingHikesFlag) ? ' ...' : ''
-
-          // Update Park Lists
-          const listParkLink = (parkHasHikes)
-            ? `<a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow, 'parkname')}</a>`
-            : `<a href="${cellText(parkSheetRow, 'parkurl')}">${cellText(parkSheetRow, 'parkname')}</a>`
-          const parksListLi = `
-            <li class="bullet-icon ${parkStatus}">
-               ${listParkLink}${parkHikesStr(parkName, parkStatus, parkSheetRow)}${missingHikesMarker}
-            </li>`
-
-          $(`#${parkStatusDivId} ul.parks-list`).append(parksListLi)
-        })
-      })
-    }
-
-    if (pageHasElement('#sectionHikesByDate')) {
-      const entries = []
-      const hikes = Hikes.completed.filter(hikeRow => {
-        return getHikeDate(hikeRow).isValid()
-      }).sort(sortByHikeDate).reverse()
-      hikes.forEach(hikeRow => {
-        const hikeDate = getHikeDate(hikeRow)
-        const blogurl = cellText(hikeRow, 'blogposturl')
-        const blogicon = blogurl ? `<i class="far fa-images"></i>` : ''
-        const dogicon = cellIsYes(hikeRow, 'dogs') ? '<i class="inline-icon doghike"></i>' : ''
-        const hardicon = cellIsYes(hikeRow, 'hard') ? '<i class="inline-icon hardhike"></i>' : ''
-        const recClass = cellIsYes(hikeRow, 'rec') ? 'hike-recommended' : ''
-        let entry = blogurl ? `<a class="hike-card-link" href="${blogurl}">` : ''
-        entry += `
-          <div class="page-subsection hike-card ${recClass}">
-            <div class="hike-card-date">
-              <time datetime="${hikeDate.format('L')}" class="icon">
-                <div class='time-header'>${hikeDate.format('MMM')} ${hikeDate.format('YYYY')}</div>
-                <div class='time-daynum'>${hikeDate.format('DD')}</div>
-                <div class='time-dayname'>${hikeDate.format('dddd')}</div>
-              </time>
-            </div>
-            <div class="hike-card-content">
-              <h6>${cellText(hikeRow, 'hikename')} ${blogicon} ${hardicon} ${dogicon}</h6>
-              <p>
-              ${hikePark(hikeRow)}<br/>
-              ${hikeInfo(hikeRow)}
-              </p>
-            </div>
-          </div>
-          `
-        if (blogurl) {
-          entry += `</a>`
-        }
-        entries.push(entry)
-      })
-      if (entries.length) {
-        $('#sectionHikesByDate').append(entries.join(''))
-        const statStr = getStatsStringHtml(getHikesStatsByStatus('completed'))
-        $(`#sectionHikesByDate .hike-stats`).append(statStr)
-      }
-    }
-
-    if (pageHasElement('#sectionParkDetails')) {
-      const parks = ParkList.filter(parkRow => {
-        const parkName = cellText(parkRow, 'parkname')
-        return (parkName in ParkStats && ParkStats[parkName].total.hikes > 0)
-      })
-      parks.sort(sortByParkName).forEach((parkSheetRow, parkSheetIdx) => {
+      const parksSheet = parksSheetResponse[0].rows
+      const hikesSheet = hikesSheetResponse[0].rows
+      parksSheet.forEach(function(parkSheetRow, parkSheetIdx) {
         const parkName = cellText(parkSheetRow, 'parkname')
-        const parkAnchorID = parkName.replace(/[^\w]/g, '-').toLowerCase()
-        const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
-        const parkCity = cellText(parkSheetRow, 'primarycity') ? ` - ${cellText(parkSheetRow, 'primarycity')}` : ''
-        const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow, 'eastbaychallenge')}"></span>`
-        const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}`
-        const missingHikesFlag = cellIsEmpty(parkSheetRow, 'trailshikedid')
-        GoToParkOptions.push({id: parkAnchorID, name: parkName})
+        if (!parkName) return // Not a park
+        ParkList.push(parkSheetRow)
+        ParksByName[parkName] = parkSheetRow
 
-        // Parks Hiked Map
-        let map = '<img src="//placehold.it/200" alt="">'
-        if (!missingHikesFlag) {
-          map = `
-            <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow, 'trailshikedid')}">
-              <img class="lozad"
-                data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow, 'trailshikedmobileid')}"
-                data-srcset="https://drive.google.com/uc?id=${cellText(parkSheetRow, 'trailshikedwebid')} 768w">
-            </a>
-          `
-        }
-        let parkDiv = `${parkAnchor}<div class="page-subsection park-card ${parkAnchorID}">
-          <div class="park-card-image">${map}</div>
-          <div class="park-card-content">
-            <h5>${parkHeader}</h5>
-            <p>
-        `
+        const parkStatus = cellText(parkSheetRow, 'eastbaychallenge')
+        updateChallengeParkStats(parkStatus)
+      })
 
-        // Park Quick Links
-        const quickLinks = []
-        const url2link = (id, text) => `<a target="_blank" href="${cellText(parkSheetRow, id)}">${text}</a> <i class="fas fa-xs fa-external-link-alt"></i>`
-        const id2link = (id, text) => `<a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow, id)}">${text}</a> <i class="fas fa-xs fa-external-link-alt"></i>`
-        if (! cellIsEmpty(parkSheetRow, 'parkurl')) quickLinks.push(url2link('parkurl', 'Park Website'))
-        if (! cellIsEmpty(parkSheetRow, 'trailmapid')) quickLinks.push(id2link('trailmapid', 'Trail Map'))
-        if (! cellIsEmpty(parkSheetRow, 'alltrailsparkurl')) quickLinks.push(url2link('alltrailsparkurl', 'All Trails Best Hikes'))
-        const joiner = (SmallMedia) ? '<br/>' : ' | '
-        parkDiv += `<span class="small-text">${quickLinks.join(joiner)}<span>`
+      hikesSheet.forEach(function(hikesSheetRow) {
+        const parkName = cellText(hikesSheetRow, 'parkname')
+        const hikeName = cellText(hikesSheetRow, 'hikename')
+        const hikeStatus = cellText(hikesSheetRow, 'hikestatus')
+        const hikeDate = cellText(hikesSheetRow, 'hikedate')
+        if (!parkName || !hikeName) return // Not a hike
+        const inChallenge = (parkName in ParksByName) && !!cellText(ParksByName[parkName], 'eastbaychallenge')
 
-        // Park Hikes
-        ;['nexthike', 'planned', 'completed'].forEach(hikeStatus => {
-          const hikes = getHikeListByStatus(hikeStatus, parkName)
-          if (hikes.length) {
-            parkDiv += `
-          <div class="small-text">
-            <span class="capitalize"><b>${hikeStatus}</b></span>
-            <ul>${hikes.join('')}</ul>
-          </div>`
+        initIfUndefined(Hikes, hikeStatus, [])
+        Hikes[hikeStatus].push(hikesSheetRow)
+
+        const distance = parseFloat(cellText(hikesSheetRow, 'distance'))
+        const elevation = parseFloat(cellText(hikesSheetRow, 'elevation'))
+        updateParkStats(parkName, hikeStatus, distance, elevation)
+        updateHikeStats(hikeStatus, inChallenge, distance, elevation, hikeDate)
+      })
+
+      /**
+       *  Now just check and see which divs pages are looking for and fill them in
+       */
+
+      if (pageHasElement('#challengeStats')) {
+        $('#challengeStats').append(getStatsTableHtml(ChallengeStats))
+      }
+
+      if (pageHasElement('#hikingStats')) {
+        $('#hikingStats').append(getStatsTableHtml(OverallStats))
+      }
+
+      if (pageHasElement('#sectionHikes')) {
+        ['completed', 'planned', 'nexthike'].forEach(hikeStatus => {
+          if (pageHasElement(`#sectionHikes #${hikeStatus}`) && (hikeStatus in Hikes)) {
+            const hikes = getHikeListByStatus(hikeStatus)
+            if (hikes.length) {
+              const statStr = getStatsStringHtml(getHikesStatsByStatus(hikeStatus))
+              $(`#sectionHikes #${hikeStatus} .hike-stats`).append(statStr)
+              $(`#sectionHikes #${hikeStatus} ul.hikes-list`).append(hikes.join(''))
+            }
           }
         })
-        parkDiv += '</div></div><br>'
-        $('#sectionParkDetailsCards').append(parkDiv)
-
-        // Lozad - Lazy loading. Dynamically detect new images
-        if (parkSheetIdx % 5 === 0) {
-          lozadObserver.observe()
-        }
-      })
-      // Register any added lozad images
-      lozadObserver.observe()
-
-      GoToParkOptions.sort((a, b) => a.name.localeCompare(b.name))
-      const parkSelectOptions = GoToParkOptions.reduce((list, park) => {
-        list += `<option value="${park.id}">${park.name}</option>`
-        return list
-      }, '')
-      $('select#goToPark').append(parkSelectOptions)
-
-      $('select#goToPark').change(function() {
-        const sel = $(this).find('option:selected')
-        window.scrollTo(0, $(`.park-card.${sel[0].value}`).offset().top - 50)
-      })
-
-      if (location.hash) {
-        // If someone comes with an anchor, go there (after the images have loaded)
-        setTimeout(function() {
-          location.href = location.hash
-        }, 2000)
       }
-    }
-  })
+
+      if (pageHasElement('#sectionChallenge')) {
+        const challengeParksGroups = {
+          // listDivId: progress-group
+          parksCompleted: 'completed',
+          parksInProgress: 'inprogress',
+          parksNotStarted: 'notstarted',
+        }
+        Object.keys(challengeParksGroups).forEach(parkStatusDivId => {
+          const thisProgress = challengeParksGroups[parkStatusDivId]
+          $(`#${parkStatusDivId} h6`).append(` <span class="park-list-count">(${ChallengeStats[thisProgress].parks})</span>`)
+
+          ParkList.filter(row => parkInChallenge(row) && parkGetProgress(row) === thisProgress).forEach(parkSheetRow => {
+            const parkName = cellText(parkSheetRow, 'parkname')
+            const parkStatus = cellText(parkSheetRow, 'eastbaychallenge')
+            const parkAnchorID = parkName.replace(/[^\w]/g, '-').toLowerCase()
+            const parkHasHikes = (parkName in ParkStats && ParkStats[parkName].total.hikes)
+            const missingHikesFlag = cellIsEmpty(parkSheetRow, 'trailshikedid')
+            const missingHikesMarker = (missingHikesFlag) ? ' ...' : ''
+
+            // Update Park Lists
+            const listParkLink = (parkHasHikes)
+              ? `<a href="https://davidhikesalot.com/parks/#${parkAnchorID}">${cellText(parkSheetRow, 'parkname')}</a>`
+              : `<a href="${cellText(parkSheetRow, 'parkurl')}">${cellText(parkSheetRow, 'parkname')}</a>`
+            const parksListLi = `
+              <li class="bullet-icon ${parkStatus}">
+                 ${listParkLink}${parkHikesStr(parkName, parkStatus, parkSheetRow)}${missingHikesMarker}
+              </li>`
+
+            $(`#${parkStatusDivId} ul.parks-list`).append(parksListLi)
+          })
+        })
+      }
+
+      if (pageHasElement('#sectionHikesByDate')) {
+        const entries = []
+        const hikes = Hikes.completed.filter(hikeRow => {
+          return getHikeDate(hikeRow).isValid()
+        }).sort(sortByHikeDate).reverse()
+        hikes.forEach(hikeRow => {
+          const hikeDate = getHikeDate(hikeRow)
+          const blogurl = cellText(hikeRow, 'blogposturl')
+          const blogicon = blogurl ? `<i class="far fa-images"></i>` : ''
+          const dogicon = cellIsYes(hikeRow, 'dogs') ? '<i class="inline-icon doghike"></i>' : ''
+          const hardicon = cellIsYes(hikeRow, 'hard') ? '<i class="inline-icon hardhike"></i>' : ''
+          const recClass = cellIsYes(hikeRow, 'rec') ? 'hike-recommended' : ''
+          let entry = blogurl ? `<a class="hike-card-link" href="${blogurl}">` : ''
+          entry += `
+            <div class="page-subsection hike-card ${recClass}">
+              <div class="hike-card-date">
+                <time datetime="${hikeDate.format('L')}" class="icon">
+                  <div class='time-header'>${hikeDate.format('MMM')} ${hikeDate.format('YYYY')}</div>
+                  <div class='time-daynum'>${hikeDate.format('DD')}</div>
+                  <div class='time-dayname'>${hikeDate.format('dddd')}</div>
+                </time>
+              </div>
+              <div class="hike-card-content">
+                <h6>${cellText(hikeRow, 'hikename')} ${blogicon} ${hardicon} ${dogicon}</h6>
+                <p>
+                ${hikePark(hikeRow)}<br/>
+                ${hikeInfo(hikeRow)}
+                </p>
+              </div>
+            </div>
+            `
+          if (blogurl) {
+            entry += `</a>`
+          }
+          entries.push(entry)
+        })
+        if (entries.length) {
+          $('#sectionHikesByDate').append(entries.join(''))
+          const statStr = getStatsStringHtml(getHikesStatsByStatus('completed'))
+          $(`#sectionHikesByDate .hike-stats`).append(statStr)
+        }
+      }
+
+      if (pageHasElement('#sectionParkDetails')) {
+        const parks = ParkList.filter(parkRow => {
+          const parkName = cellText(parkRow, 'parkname')
+          return (parkName in ParkStats && ParkStats[parkName].total.hikes > 0)
+        })
+        parks.sort(sortByParkName).forEach((parkSheetRow, parkSheetIdx) => {
+          const parkName = cellText(parkSheetRow, 'parkname')
+          const parkAnchorID = parkName.replace(/[^\w]/g, '-').toLowerCase()
+          const parkAnchor = `<a name="${parkAnchorID}" class="park-anchor"></a>`
+          const parkCity = cellText(parkSheetRow, 'primarycity') ? ` - ${cellText(parkSheetRow, 'primarycity')}` : ''
+          const parkStatusIcon = `<span class="status-icon ${cellText(parkSheetRow, 'eastbaychallenge')}"></span>`
+          const parkHeader = `${parkStatusIcon} ${parkName}${parkCity}`
+          const missingHikesFlag = cellIsEmpty(parkSheetRow, 'trailshikedid')
+          GoToParkOptions.push({id: parkAnchorID, name: parkName})
+
+          // Parks Hiked Map
+          let map = '<img src="//placehold.it/200" alt="">'
+          if (!missingHikesFlag) {
+            map = `
+              <a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow, 'trailshikedid')}">
+                <img class="lozad"
+                  data-src="https://drive.google.com/uc?id=${cellText(parkSheetRow, 'trailshikedmobileid')}"
+                  data-srcset="https://drive.google.com/uc?id=${cellText(parkSheetRow, 'trailshikedwebid')} 768w">
+              </a>
+            `
+          }
+          let parkDiv = `${parkAnchor}<div class="page-subsection park-card ${parkAnchorID}">
+            <div class="park-card-image">${map}</div>
+            <div class="park-card-content">
+              <h5>${parkHeader}</h5>
+              <p>
+          `
+
+          // Park Quick Links
+          const quickLinks = []
+          const url2link = (id, text) => `<a target="_blank" href="${cellText(parkSheetRow, id)}">${text}</a> <i class="fas fa-xs fa-external-link-alt"></i>`
+          const id2link = (id, text) => `<a target="_blank" href="https://drive.google.com/uc?id=${cellText(parkSheetRow, id)}">${text}</a> <i class="fas fa-xs fa-external-link-alt"></i>`
+          if (! cellIsEmpty(parkSheetRow, 'parkurl')) quickLinks.push(url2link('parkurl', 'Park Website'))
+          if (! cellIsEmpty(parkSheetRow, 'trailmapid')) quickLinks.push(id2link('trailmapid', 'Trail Map'))
+          if (! cellIsEmpty(parkSheetRow, 'alltrailsparkurl')) quickLinks.push(url2link('alltrailsparkurl', 'All Trails Best Hikes'))
+          const joiner = (SmallMedia) ? '<br/>' : ' | '
+          parkDiv += `<span class="small-text">${quickLinks.join(joiner)}<span>`
+
+          // Park Hikes
+          ;['nexthike', 'planned', 'completed'].forEach(hikeStatus => {
+            const hikes = getHikeListByStatus(hikeStatus, parkName)
+            if (hikes.length) {
+              parkDiv += `
+            <div class="small-text">
+              <span class="capitalize"><b>${hikeStatus}</b></span>
+              <ul>${hikes.join('')}</ul>
+            </div>`
+            }
+          })
+          parkDiv += '</div></div><br>'
+          $('#sectionParkDetailsCards').append(parkDiv)
+
+          // Lozad - Lazy loading. Dynamically detect new images
+          if (parkSheetIdx % 5 === 0) {
+            lozadObserver.observe()
+          }
+        })
+        // Register any added lozad images
+        lozadObserver.observe()
+
+        GoToParkOptions.sort((a, b) => a.name.localeCompare(b.name))
+        const parkSelectOptions = GoToParkOptions.reduce((list, park) => {
+          list += `<option value="${park.id}">${park.name}</option>`
+          return list
+        }, '')
+        $('select#goToPark').append(parkSelectOptions)
+
+        $('select#goToPark').change(function() {
+          const sel = $(this).find('option:selected')
+          window.scrollTo(0, $(`.park-card.${sel[0].value}`).offset().top - 50)
+        })
+
+        if (location.hash) {
+          // If someone comes with an anchor, go there (after the images have loaded)
+          setTimeout(function() {
+            location.href = location.hash
+          }, 2000)
+        }
+      }
+    })
 })
