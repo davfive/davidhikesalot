@@ -19,8 +19,6 @@ const GoToParkOptions = []
 
 /* Global Info */
 const SmallMedia = window.matchMedia('only screen and (max-width: 768px)').matches
-const ParksSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/1/public/values?alt=json'
-const HikesSheetUrl = 'https://spreadsheets.google.com/feeds/list/1n3-VmBC3xEZnEGdV2daK4UODY6_2fkYNBcJ4Yj9r4AE/2/public/values?alt=json'
 
 /* Utility Functions */
 const cellIsYes = (row, id) => (id && (`gsx$${id}` in row)) ? row[`gsx$${id}`]['$t'] === 'yes' : false
@@ -213,6 +211,8 @@ jQuery(document).ready(function($) {
   const lozadObserver = lozad()
   lozadObserver.observe()
   
+  const ParksSheetUrl = 'https://script.google.com/macros/s/AKfycbwzfA7hwgguH3TAu2_QWMPncVNho3VNpJfyimwIlQIJE7dngm6JLYxCWHnFzDMbJWnBiA/exec?sheet=parks'
+  const HikesSheetUrl = 'https://script.google.com/macros/s/AKfycbwzfA7hwgguH3TAu2_QWMPncVNho3VNpJfyimwIlQIJE7dngm6JLYxCWHnFzDMbJWnBiA/exec?sheet=hikes'
   $.when($.getJSON(ParksSheetUrl), $.getJSON(HikesSheetUrl))
     .fail(function() {
       alert('I was unable to get the hiking info. Sorry for the inconvenience. Please click OK to retry (may take a few tries).\n\nWhy? Google changed their spreadsheet APIs (v3 to v4) and randomly fails v3 calls as a warning. I am currently updating my site to support the new APIs. Thanks for your patience.')
