@@ -26,10 +26,13 @@ const cellText = (row, id) => {
   return (id && (id in row)) ? row[id] : ''
 }
 const cellIsEmpty = (row, id) => (['', '--'].indexOf(cellText(row, id)) >= 0)
-const getHikeDate = hikeRow => {
-  if (cellIsEmpty(hikeRow, 'hikedate')) return undefined
-  return moment(cellText(hikeRow, 'hikedate'), 'DD/MMM/YYYY')
-}
+
+const strIsDate = s => Date.parse(s) !== NaN
+const strToDate = s => strIsDate(s) ? moment(s, 'DD/MMM/YYYY') : moment.invalid()
+const cellIsDate = (row, id) => strIsDate(cellText(row, id))
+const cellToDate = (row, id) => strToDate(cellIsDate(row, id))
+const getHikeDate = hikeRow => cellToDate(hikeRow, 'hikedate')
+
 const getHikeListByStatus = (hikeStatus, parkName) => {
   const filteredHikes = (hikeStatus, parkName) => {
     return parkName
@@ -138,12 +141,10 @@ const updateHikeStats = (hikeStatus, inChallenge, distance, elevation, hikeDate)
   }
   if (hikeStatus === 'completed') {
     addHikeStat('completed', distance, elevation)
-    try {
-      hikeDate = moment(hikeDate)
-      if (hikeDate.isValid()) {
-        addHikeStat(hikeDate.year(), distance, elevation)
-      }
-    } catch(e) {}
+    hikeDate = strToDate(hikeDate)
+    if (hikeDate.isValid()) {
+      addHikeStat(hikeDate.year(), distance, elevation)
+    }
   } else {
     addHikeStat('planned', distance, elevation)
   }
@@ -311,8 +312,7 @@ jQuery(document).ready(function($) {
     if (pageHasElement('#sectionHikesByDate')) {
       const entries = []
       const hikes = Hikes.completed.filter(hikeRow => {
-        const hikeDate = getHikeDate(hikeRow)
-        return !!hikeDate && hikeDate.isValid()
+        return getHikeDate(hikeRow).isValid()
       }).sort(sortByHikeDate).reverse()
       hikes.forEach(hikeRow => {
         const hikeDate = getHikeDate(hikeRow)
